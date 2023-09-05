@@ -3,8 +3,10 @@
     enable = true;
 
     config = {
-      plugins = with inputs.anyrun.packages;
-        [ inputs.anyrun.packages.${pkgs.system}.applications inputs.anyrun.packages.${pkgs.system}.translate ];
+      plugins = with inputs.anyrun.packages; [
+        inputs.anyrun.packages.${pkgs.system}.applications
+        inputs.anyrun.packages.${pkgs.system}.translate
+      ];
       hidePluginInfo = true;
       layer = "overlay";
       closeOnClick = true;

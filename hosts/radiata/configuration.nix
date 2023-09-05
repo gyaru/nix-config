@@ -130,7 +130,8 @@
   fonts = {
     packages = __attrValues {
       inherit (pkgs)
-        noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-cjk-serif rounded-mgenplus maple-mono-NF;
+        noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-cjk-serif
+        rounded-mgenplus maple-mono-NF;
     };
 
     fontconfig = {
@@ -138,9 +139,7 @@
 
       # TODO: edit fonts to something i actually like
       defaultFonts = {
-        monospace = [
-          "Maple Mono NF"
-        ];
+        monospace = [ "Maple Mono NF" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -228,9 +227,7 @@
   };
 
   # time
-  time = {
-    timeZone = "Europe/Stockholm";
-  };
+  time = { timeZone = "Europe/Stockholm"; };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

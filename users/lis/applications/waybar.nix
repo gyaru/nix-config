@@ -9,7 +9,7 @@
       layer = "top";
       position = "top";
       tray = { spacing = 10; };
-      modules-right = [ "pulseaudio" "cpu" "clock" "tray"];
+      modules-right = [ "pulseaudio" "cpu" "clock" "tray" ];
       clock = {
         format-alt = "{:%Y-%m-%d}";
         tooltip-format = "{:%Y-%m-%d | %H:%M}";

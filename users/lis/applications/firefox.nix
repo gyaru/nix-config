@@ -27,7 +27,7 @@ in {
         "browser.startup.homepage" = "about:blank";
         # locale shenanigans, other locales are ass
         "intl.accept_languages" = "en-US, en";
-        
+
         "javascript.use_us_english_locale" = true;
         # disable recommendation pane in about:addons
         "extensions.getAddons.showPane" = false;
