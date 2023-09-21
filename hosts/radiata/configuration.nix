@@ -1,6 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  # You can import other NixOS modules here
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   nixpkgs = {
     overlays = [
@@ -10,7 +11,6 @@
     ];
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
     };
   };
 
@@ -36,7 +36,7 @@
   };
 
   boot = {
-    consoleLogLevel = 0;
+    #consoleLogLevel = 0;
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
     kernelParams = [
       "preempt=full"
@@ -44,7 +44,7 @@
       "amd_pstate=passive"
       "amd_pstate.shared_mem=1"
       "initcall_blacklist=acpi_cpufreq_init"
-      "quiet"
+      #"quiet"
       "udev.log_level=3"
     ];
 
@@ -111,7 +111,6 @@
     };
   };
 
-  # zsh goes brum
   environment = {
     binsh = "${pkgs.zsh}/bin/zsh";
     pathsToLink = [ "/share/zsh" ];
@@ -122,7 +121,8 @@
     systemPackages = __attrValues {
       inherit (pkgs)
         file nano curl fd man-pages man-pages-posix ripgrep wget home-manager
-        nixfmt sbctl ntfs3g comma;
+        nixfmt sbctl ntfs3g comma atool unzip nix-output-monitor
+        edk2-uefi-shell;
     };
   };
 
@@ -206,7 +206,7 @@
     };
   };
 
-  # user
+  # user lis
   users.users.lis = {
     isNormalUser = true;
     home = "/home/lis";

@@ -1,4 +1,5 @@
 { inputs, lib, pkgs, ... }: {
+  imports = [ inputs.hyprland.homeManagerModules.default ];
   home.packages = with pkgs; [ jaq xorg.xprop ];
 
   # hyprland config

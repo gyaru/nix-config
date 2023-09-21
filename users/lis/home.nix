@@ -5,23 +5,7 @@
     ./applications/anyrun.nix
     ./applications/wezterm.nix
     ./applications/firefox.nix
-    # ./applications/waybar.nix
   ];
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-    ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
 
   home = {
     username = "lis";
@@ -29,7 +13,7 @@
     packages = __attrValues {
       inherit (pkgs)
         telegram-desktop bitwarden grim slurp btop spotify mpv eww-wayland
-        swaybg wlogout playerctl;
+        swaybg wlogout playerctl discord-canary imv river;
     };
 
     sessionPath = [ ];
@@ -41,6 +25,10 @@
       XCURSOR_SIZE = "16";
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
+      XDG_CACHE_HOME = "$HOME/.cache";
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
     };
   };
 
@@ -63,35 +51,19 @@
 
   programs.zsh = {
     enable = true;
-    initExtra = ''
-      echo "Hello!"
-    '';
-    plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "v0.7.0";
-          sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
-        };
-      }
-      {
-        name = "enhancd";
-        file = "init.sh";
-        src = pkgs.fetchFromGitHub {
-          owner = "b4b4r07";
-          repo = "enhancd";
-          rev = "v2.5.1";
-          sha256 = "kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
-        };
-      }
-    ];
+    initExtra = "";
+    plugins = [{
+      name = "zsh-autosuggestions";
+      src = pkgs.fetchFromGitHub {
+        owner = "zsh-users";
+        repo = "zsh-autosuggestions";
+        rev = "v0.7.0";
+        sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
+      };
+    }];
   };
 
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
-
+  # xdg defaults
   xdg = {
     userDirs = {
       enable = true;
@@ -100,11 +72,14 @@
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";
     };
+    # eww, TODO: move this prob
     configFile = {
       "eww/eww.yuck".source = ./applications/eww/eww.yuck;
       "eww/eww.scss".source = ./applications/eww/eww.scss;
     };
   };
+
+  systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";

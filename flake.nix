@@ -15,7 +15,7 @@
     # fmt
     nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
     # home-manager
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # anyrun
     anyrun.url = "github:Kirottu/anyrun";
@@ -38,51 +38,36 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        # "aarch64-darwin"
-      ];
-    in rec {
-      # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; });
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; });
+      systems = [ "x86_64-linux" ];
+      # This is a function that generates an attribute by calling a function you
+      # pass to it, with each system as an argument
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in {
+      packages =
+        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-      # Your custom packages and modifications, exported as overlays
+      formatter =
+        forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
       overlays = import ./overlays { inherit inputs; };
 
-      # modules
       nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
 
       # host configs
       nixosConfigurations = {
         radiata = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
+          system = "x86_64-linux";
           modules = [
             ./hosts/radiata/configuration.nix
             inputs.lanzaboote.nixosModules.lanzaboote
-          ];
-        };
-      };
-
-      # home-manager
-      homeConfigurations = {
-        # home-manager.useGlobalPkgs = true;
-        "lis@radiata" = home-manager.lib.homeManagerConfiguration {
-          pkgs =
-            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./users/lis/home.nix
-            inputs.anyrun.homeManagerModules.default
-            inputs.hyprland.homeManagerModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.lis = import ./users/lis/home.nix;
+            }
           ];
         };
       };

@@ -17,11 +17,9 @@
 
   # boot
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B053-7D3E";
+    device = "/dev/disk/by-uuid/601B-12CD";
     fsType = "vfat";
   };
-
-  swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
 

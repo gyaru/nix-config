@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, nixpkgs, ... }:
 let addons = inputs.firefox-addons.packages.${pkgs.system};
 in {
   programs.firefox = {
@@ -12,7 +12,8 @@ in {
       extensions = with addons; [
         ublock-origin
         sidebery
-        # languagetool - TODO: this counts as unfree and apparently home-manager being run like this means it's not reading allowUnfree = true for config
+        stylus
+        # languagetool # allowUnfree = true; somehow still not applied here, wat.
         # enhancer-for-youtube
         augmented-steam
       ];
