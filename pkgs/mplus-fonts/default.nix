@@ -6,6 +6,7 @@
 stdenvNoCC.mkDerivation rec {
   pname = "mplus-fonts";
   version = "TESTFLIGHT_063a";
+  dontConfigue = true;
 
   src = fetchFromGitHub {
     owner = "coz-m";

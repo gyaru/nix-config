@@ -125,6 +125,12 @@
     opengl = {
       enable = true;
       driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+      ];
     };
   };
 
@@ -132,48 +138,41 @@
     binsh = "${pkgs.zsh}/bin/zsh";
     pathsToLink = ["/share/zsh"];
     shells = with pkgs; [zsh];
-    systemPackages = __attrValues {
-      inherit
-        (pkgs)
-        file
-        nano
-        curl
-        fd
-        man-pages
-        man-pages-posix
-        ripgrep
-        wget
-        home-manager
-        alejandra
-        sbctl
-        ntfs3g
-        comma
-        atool
-        unzip
-        nix-output-monitor
-        edk2-uefi-shell
-        ;
-    };
+    systemPackages = with pkgs; [
+      file
+      nano
+      curl
+      fd
+      man-pages
+      man-pages-posix
+      ripgrep
+      wget
+      home-manager
+      alejandra
+      sbctl
+      ntfs3g
+      comma
+      atool
+      unzip
+      nix-output-monitor
+      edk2-uefi-shell
+    ];
   };
 
-  # fonts TODO: change to shit i like
+  # fonts
   fonts = {
-    packages = __attrValues {
-      inherit
-        (pkgs)
-        noto-fonts
-        noto-fonts-emoji
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        maple-mono-NF
-        ;
-    };
-
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-emoji
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      maple-mono-NF
+      (pkgs.callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
+    ];
     fontconfig = {
       enable = lib.mkDefault true;
-      # TODO: edit fonts to something i actually like
       defaultFonts = {
-        monospace = ["Maple Mono NF"];
+        monospace = ["M PLUS 1 Code"];
         emoji = ["Noto Color Emoji"];
       };
     };

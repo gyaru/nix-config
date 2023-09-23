@@ -10,8 +10,8 @@
 
       -- font
       config.font =
-      wezterm.font_with_fallback { "Maple Mono NF" }
-      config.font_size = 11
+      wezterm.font_with_fallback { "M PLUS 1 Code", "Maple Mono NF", "Noto Color Emoji" }
+      config.font_size = 12
 
       -- disable things we don't really need
       config.enable_scroll_bar = false
@@ -38,10 +38,10 @@
       config.default_cursor_style = "BlinkingBar"
       config.color_scheme = "rose-pine-dawn"
       config.window_padding = {
-          left = 13,
-          right = 13,
-          top = 13,
-          bottom = 13,
+          left = 5,
+          right = 5,
+          top = 5,
+          bottom = 5,
       }
 
       config.colors = {

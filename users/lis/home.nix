@@ -12,30 +12,28 @@
     ./applications/anyrun.nix
     ./applications/wezterm.nix
     ./applications/firefox.nix
+    ./applications/eww
   ];
 
   home = {
     username = "lis";
     homeDirectory = "/home/lis";
-    packages = __attrValues {
-      inherit
-        (pkgs)
-        telegram-desktop
-        bitwarden
-        grim
-        slurp
-        btop
-        spotify
-        mpv
-        eww-wayland
-        swaybg
-        wlogout
-        playerctl
-        discord-canary
-        imv
-        river
-        ;
-    };
+    packages = with pkgs; [
+      telegram-desktop
+      bitwarden
+      grim
+      slurp
+      btop
+      spotify
+      mpv
+      eww-wayland
+      swaybg
+      wlogout
+      playerctl
+      discord-canary
+      imv
+      river
+    ];
 
     sessionPath = [];
 
@@ -62,7 +60,7 @@
   # starship
   programs.starship = {
     enable = true;
-    settings = {};
+    settings = {add_newline = false;};
   };
 
   programs.direnv = {
@@ -96,11 +94,6 @@
       music = "${config.home.homeDirectory}/music";
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";
-    };
-    # eww, TODO: move this prob
-    configFile = {
-      "eww/eww.yuck".source = ./applications/eww/eww.yuck;
-      "eww/eww.scss".source = ./applications/eww/eww.scss;
     };
   };
 

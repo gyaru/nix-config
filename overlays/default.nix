@@ -8,11 +8,9 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     # discord, fixes firefox + adds openasar and vencord
-    # discord-canary = prev.discord-canary.overrideAttrs (oldAttrs: rec {
-    #   withOpenASAR = true;
-    #   withVencord = true;
-    #   nss = final.nss_latest;
-    # });
+    discord-canary = prev.discord-canary.override (oldAttrs: rec {
+      nss = prev.nss_latest;
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

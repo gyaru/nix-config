@@ -15,9 +15,9 @@
       pkief.material-icon-theme
     ];
     userSettings = {
-      "editor.fontSize" = 14;
+      "editor.fontSize" = 16;
       "editor.fontLigatures" = true;
-      "editor.fontFamily" = "'Maple Mono NF', 'monospace', monospace";
+      "editor.fontFamily" = "'M PLUS 1 Code', 'Maple Mono NF', 'Noto Color Emoji', 'monospace', monospace";
       "workbench.colorTheme" = "Rosé Pine Dawn";
       "workbench.iconTheme" = "material-icon-theme";
       "workbench.productIconTheme" = "material-product-icons";
