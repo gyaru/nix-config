@@ -1,9 +1,7 @@
+<div align="center">
+	<img src="https://github.com/gyaru/gyaru/raw/main/lis.png" width="150px" alt="hi">
+</div>
 
+# lis nix flakes
 
-# rebuild nixos
-
-```nixos-rebuild switch --flake .#radiata --recreate-lock-file```
-
-# rebuild home-manager
-
-```home-manager switch --flake .#lis@radiata --show-trace```
+```nixos-rebuild switch --flake .#radiata --recreate-lock-file --show-trace |& nom```

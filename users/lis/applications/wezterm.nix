@@ -1,4 +1,4 @@
-{ default, ... }: {
+{default, ...}: {
   programs.wezterm = {
     enable = true;
     extraConfig = ''
@@ -38,15 +38,15 @@
       config.default_cursor_style = "BlinkingBar"
       config.color_scheme = "rose-pine-dawn"
       config.window_padding = {
-          left = 12,
-          right = 12,
-          top = 12,
-          bottom = 12,
+          left = 13,
+          right = 13,
+          top = 13,
+          bottom = 13,
       }
 
       config.colors = {
-      selection_fg = '#f2e9e1',
-      selection_bg = '#d7827e',
+        selection_fg = '#f2e9e1',
+        selection_bg = '#d7827e',
       }
 
       return config

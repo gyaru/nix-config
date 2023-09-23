@@ -1,4 +1,11 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./applications/hyprland.nix
     ./applications/vscode.nix
@@ -11,18 +18,33 @@
     username = "lis";
     homeDirectory = "/home/lis";
     packages = __attrValues {
-      inherit (pkgs)
-        telegram-desktop bitwarden grim slurp btop spotify mpv eww-wayland
-        swaybg wlogout playerctl discord-canary imv river;
+      inherit
+        (pkgs)
+        telegram-desktop
+        bitwarden
+        grim
+        slurp
+        btop
+        spotify
+        mpv
+        eww-wayland
+        swaybg
+        wlogout
+        playerctl
+        discord-canary
+        imv
+        river
+        ;
     };
 
-    sessionPath = [ ];
+    sessionPath = [];
 
-    sessionVariables = with config.colorscheme.colors; {
+    sessionVariables = {
       BROWSER = "firefox";
       QT_QPA_PLATFORMTHEME = "qt5ct";
       RUSTUP_HOME = "${config.home.homeDirectory}/.local/share/rustup";
       XCURSOR_SIZE = "16";
+      XCURSOR_THEME = "Adwaita";
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
       XDG_CACHE_HOME = "$HOME/.cache";
@@ -32,14 +54,15 @@
     };
   };
 
-  # Enable home-manager and git
+  # enable home-manager
   programs.home-manager.enable = true;
+  # enable git
   programs.git.enable = true;
 
   # starship
   programs.starship = {
     enable = true;
-    settings = { };
+    settings = {};
   };
 
   programs.direnv = {
@@ -47,20 +70,22 @@
     nix-direnv.enable = true;
   };
 
-  programs.fzf = { enable = true; };
+  programs.fzf = {enable = true;};
 
   programs.zsh = {
     enable = true;
     initExtra = "";
-    plugins = [{
-      name = "zsh-autosuggestions";
-      src = pkgs.fetchFromGitHub {
-        owner = "zsh-users";
-        repo = "zsh-autosuggestions";
-        rev = "v0.7.0";
-        sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
-      };
-    }];
+    plugins = [
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-autosuggestions";
+          rev = "v0.7.0";
+          sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
+        };
+      }
+    ];
   };
 
   # xdg defaults

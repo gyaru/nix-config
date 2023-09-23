@@ -1,10 +1,15 @@
-{ inputs, pkgs, nixpkgs, ... }:
-let addons = inputs.firefox-addons.packages.${pkgs.system};
+{
+  inputs,
+  pkgs,
+  nixpkgs,
+  ...
+}: let
+  addons = inputs.firefox-addons.packages.${pkgs.system};
 in {
   programs.firefox = {
     enable = true;
     package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      extraPolicies = { ExtensionSettings = { }; };
+      extraPolicies = {ExtensionSettings = {};};
     };
     profiles.default = {
       id = 0;

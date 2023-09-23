@@ -1,4 +1,11 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -15,8 +22,9 @@
   };
 
   nix = {
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    nixPath =
+      lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
       config.nix.registry;
 
     settings = {
@@ -83,7 +91,7 @@
     bootspec.enable = true;
     initrd = {
       systemd.enable = true;
-      supportedFilesystems = [ "btrfs" ];
+      supportedFilesystems = ["btrfs"];
     };
 
     lanzaboote = {
@@ -97,6 +105,15 @@
         configurationLimit = 3;
         consoleMode = "max";
         editor = false;
+        # this doesn't actually work with lanzaboote?
+        extraFiles = {"efi/shell/shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";};
+        extraEntries = {
+          "windows.conf" = ''
+            title Windows
+            efi /efi/shell/shell.efi
+            options -nointerrupt -noconsolein -noconsoleout windows.nsh
+          '';
+        };
       };
       systemd-boot.enable = lib.mkForce false;
     };
@@ -113,34 +130,51 @@
 
   environment = {
     binsh = "${pkgs.zsh}/bin/zsh";
-    pathsToLink = [ "/share/zsh" ];
-    shells = with pkgs; [ zsh ];
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1"; # try to run electron w/ wayland
-    };
+    pathsToLink = ["/share/zsh"];
+    shells = with pkgs; [zsh];
     systemPackages = __attrValues {
-      inherit (pkgs)
-        file nano curl fd man-pages man-pages-posix ripgrep wget home-manager
-        nixfmt sbctl ntfs3g comma atool unzip nix-output-monitor
-        edk2-uefi-shell;
+      inherit
+        (pkgs)
+        file
+        nano
+        curl
+        fd
+        man-pages
+        man-pages-posix
+        ripgrep
+        wget
+        home-manager
+        alejandra
+        sbctl
+        ntfs3g
+        comma
+        atool
+        unzip
+        nix-output-monitor
+        edk2-uefi-shell
+        ;
     };
   };
 
   # fonts TODO: change to shit i like
   fonts = {
     packages = __attrValues {
-      inherit (pkgs)
-        noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-cjk-serif
-        rounded-mgenplus maple-mono-NF;
+      inherit
+        (pkgs)
+        noto-fonts
+        noto-fonts-emoji
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        maple-mono-NF
+        ;
     };
 
     fontconfig = {
       enable = lib.mkDefault true;
-
       # TODO: edit fonts to something i actually like
       defaultFonts = {
-        monospace = [ "Maple Mono NF" ];
-        emoji = [ "Noto Color Emoji" ];
+        monospace = ["Maple Mono NF"];
+        emoji = ["Noto Color Emoji"];
       };
     };
   };
@@ -148,7 +182,7 @@
   # locales
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    supportedLocales = [ "en_US.UTF-8/UTF-8" ];
+    supportedLocales = ["en_US.UTF-8/UTF-8"];
     extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
       LC_IDENTIFICATION = "en_US.UTF-8";
@@ -193,7 +227,6 @@
       ];
     };
     journald.extraConfig = lib.mkForce "";
-
     pipewire = {
       enable = true;
       socketActivation = false;
@@ -211,7 +244,7 @@
     isNormalUser = true;
     home = "/home/lis";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "video" "audio" "realtime" "input" ];
+    extraGroups = ["wheel" "video" "audio" "realtime" "input"];
   };
 
   # systemd
@@ -221,13 +254,13 @@
       "${pkgs.rtkit}/libexec/rtkit-daemon --our-realtime-priority=95 --max-realtime-priority=90"
     ];
     user.services = {
-      pipewire.wantedBy = [ "default.target" ];
-      pipewire-pulse.wantedBy = [ "default.target" ];
+      pipewire.wantedBy = ["default.target"];
+      pipewire-pulse.wantedBy = ["default.target"];
     };
   };
 
   # time
-  time = { timeZone = "Europe/Stockholm"; };
+  time = {timeZone = "Europe/Stockholm";};
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

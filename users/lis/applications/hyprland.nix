@@ -1,12 +1,17 @@
-{ inputs, lib, pkgs, ... }: {
-  imports = [ inputs.hyprland.homeManagerModules.default ];
-  home.packages = with pkgs; [ jaq xorg.xprop ];
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [inputs.hyprland.homeManagerModules.default];
+  home.packages = with pkgs; [jaq xorg.xprop];
 
   # hyprland config
   wayland.windowManager.hyprland.extraConfig = ''
     # displays
     monitor = DP-1, 3440x1440@160, 1440x450, 1, bitdepth, 8
-    monitor = HDMI-A-2, 2560x1440@60, 0x0, 1, transform, 1, bitdepth, 8
+    monitor = HDMI-A-1, 2560x1440@60, 0x0, 1, transform, 1, bitdepth, 8
 
     # workspaces
     workspace = name:1, monitor:DP-1
@@ -16,25 +21,16 @@
     workspace = name:5, monitor:DP-1
     workspace = name:6, monitor:HDMI-A-1
 
-    # cursor
-    env = XCURSOR_SIZE,24
-
     # panel
     exec-once = eww daemon && eww open bar
     # wallpaper ultrawide
     exec-once = swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill
     # wallpaper portrait
-    exec-once = swaybg -o HDMI-A-2 -i ~/.local/share/wallpapers/bg2.jpg -m fill
+    exec-once = swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill
 
     # xdph
     exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    #exec-once = /usr/lib/xdg-desktop-portal-hyprland &
-    #exec-once = /usr/lib/xdg-desktop-portal &
-
-    # clipboard
-    #exec-once = wl-paste --type text --watch cliphist store
-    #exec-once = wl-paste --type image --watch cliphist store
 
     # set primary monitor for xwayland
     #exec-once = xrandr --output DP-1 --primary
@@ -51,7 +47,7 @@
     general {
         gaps_in = 15
         gaps_out = 15
-        border_size = 2
+        border_size = 3
         col.active_border = 0xFFd7827e
         col.inactive_border = 0xFFea9d34
         layout = dwindle
@@ -126,10 +122,10 @@
     bind = SUPER, O, exec, firefox
 
     # kill selected window
-    bind = SUPER SHIFT, W, killactive, 
+    bind = SUPER SHIFT, W, killactive,
 
     # quit hyprland
-    bind = SUPER SHIFT, M, exec, wlogout 
+    bind = SUPER SHIFT, M, exec, wlogout
 
     # fullscreen screen shot
     bind = SUPER, F11, exec, grim -o DP-1 # fix notification
@@ -143,7 +139,7 @@
     # shift ctrl super s?
 
     # toggle focus to floating
-    bind = SUPER, F, togglefloating, 
+    bind = SUPER, F, togglefloating,
 
     # toggle focus to pseudo tiled
     bind = SUPER, P, pseudo,
