@@ -19,6 +19,32 @@
   home = {
     username = "lis";
     homeDirectory = "/home/lis";
+
+    # impermanence is cool or something
+    persistence."/persist/home/lis" = {
+      directories = [
+        "downloads"
+        "pictures"
+        "projects"
+        "documents"
+        "videos"
+        ".gnupg"
+        ".ssh"
+        ".mozilla" # firefox TODO: make a more specific one?
+        ".cache" # TODO: check if we actually want this, maybe target specific directories instead
+        ".vscode" # TODO: check if we actually want to do this, has extension shit etc.
+        ".local/share/keyrings"
+        ".local/share/direnv"
+        ".local/share/wallpapers"
+        ".local/share/TelegramDesktop/tdata" # telegram
+        ".config/discordcanary" # discord
+      ];
+      files = [
+        ".zsh_history" # zsh history
+      ];
+      allowOther = true; # TODO: check if we actually want to do this
+    };
+
     packages = with pkgs; [
       telegram-desktop
       bitwarden
@@ -53,9 +79,10 @@
     };
   };
 
-  # enable home-manager
+  # home-manager
   programs.home-manager.enable = true;
-  # enable git
+
+  # git
   programs.git.enable = true;
 
   # starship
@@ -64,13 +91,16 @@
     settings = {add_newline = false;};
   };
 
+  # direnv
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
 
+  # fzf
   programs.fzf = {enable = true;};
 
+  # zsh
   programs.zsh = {
     enable = true;
     initExtra = "";
@@ -85,30 +115,6 @@
         };
       }
     ];
-  };
-
-  home.persistence."/persist/home/lis" = {
-    directories = [
-      "downloads"
-      "pictures"
-      "projects"
-      "documents"
-      "videos"
-      ".gnupg"
-      ".ssh"
-      ".mozilla" # firefox TODO: make a more specific one?
-      ".cache" # TODO: check if we actually want this, maybe target specific directories instead
-      ".vscode" # TODO: check if we actually want to do this, has extension shit etc.
-      ".local/share/keyrings"
-      ".local/share/direnv"
-      ".local/share/wallpapers"
-      ".local/share/TelegramDesktop/tdata" # telegram
-      ".config/discordcanary" # discord
-    ];
-    files = [
-      ".zsh_history" # zsh history
-    ];
-    allowOther = true; # TODO: check if we actually want to do this
   };
 
   # xdg defaults

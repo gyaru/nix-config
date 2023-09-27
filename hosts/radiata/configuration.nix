@@ -133,8 +133,6 @@
           mkdir -p /sysroot/etc/
           ln -snfT /persist/etc/machine-id /sysroot/etc/machine-id
         '';
-        # ln -snfT /persist/etc/passwd /sysroot/etc/passwd
-        # ln -snfT /persist/etc/shadow /sysroot/etc/shadow
       };
     };
 
@@ -211,10 +209,6 @@
         "/var/lib/bluetooth"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
-      ];
-      files = [
-        "/etc/passwd"
-        "/etc/shadow"
       ];
     };
   };
@@ -300,11 +294,14 @@
   };
 
   # users
+  users.mutableUsers = false;
+  users.users.root.hashedPasswordFile = "/persist/passwords/root";
   users.users.lis = {
     isNormalUser = true;
     home = "/home/lis";
     shell = pkgs.zsh;
     extraGroups = ["wheel" "video" "audio" "realtime" "input"];
+    hashedPasswordFile = "/persist/passwords/lis";
   };
 
   # systemd
