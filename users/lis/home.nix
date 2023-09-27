@@ -38,6 +38,7 @@
         ".local/share/wallpapers"
         ".local/share/TelegramDesktop/tdata" # telegram
         ".config/discordcanary" # discord
+        ".config/spotify" # spotify
       ];
       files = [
         ".zsh_history" # zsh history
