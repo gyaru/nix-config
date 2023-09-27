@@ -56,6 +56,8 @@
     misc {
         disable_hyprland_logo = true
         vrr = 0
+        key_press_enables_dpms = true
+        mouse_move_enables_dpms = true
     }
 
     # animations (why)
@@ -67,11 +69,6 @@
     dwindle {
         pseudotile = yes
         preserve_split = yes
-    }
-
-    # master layout
-    master {
-        new_is_master = true
     }
 
     # windows rules
