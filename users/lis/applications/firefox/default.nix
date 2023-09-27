@@ -88,6 +88,7 @@ in {
       '';
     };
   };
+  # persistence for firefox
   home.persistence."/persist/home/lis" = {
     directories = [
       ".mozilla/firefox/default/storage" # fuck u, indexeddb for extension settings are vile

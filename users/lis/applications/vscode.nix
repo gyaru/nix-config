@@ -28,9 +28,4 @@
       "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
     };
   };
-  home.persistence."/persist/home/lis" = {
-    directories = [
-      ".vscode" # TODO: can we clutter less and narrow this down
-    ];
-  };
 }
