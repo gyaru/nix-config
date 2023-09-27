@@ -7,6 +7,7 @@
   ...
 }: {
   imports = [
+    (inputs.impermanence + "/home-manager.nix")
     ./applications/hyprland.nix
     ./applications/vscode.nix
     ./applications/anyrun.nix
@@ -86,7 +87,7 @@
     ];
   };
 
-  persistence."/persist/home/lis" = {
+  home.persistence."/persist/home/lis" = {
     directories = [
       "downloads"
       "pictures"
@@ -113,7 +114,7 @@
     userDirs = {
       enable = true;
       documents = "${config.home.homeDirectory}/documents";
-      downloads = "${config.home.homeDirectory}/downloads";
+      download = "${config.home.homeDirectory}/downloads";
       music = "${config.home.homeDirectory}/music"; #
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";

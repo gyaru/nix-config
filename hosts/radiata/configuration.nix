@@ -8,6 +8,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    (inputs.impermanence + "/nixos.nix")
   ];
 
   nixpkgs = {
