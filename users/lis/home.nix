@@ -51,18 +51,17 @@
       grim
       slurp
       btop
-      swaybginfo:
-        [pipewire] No captures available
-        obs-studio
-        mpv
-        eww-wayland
-        wl-clipboard
-        hyprpicker
-        wlogout
-        playerctl
-        discord-canary
-        imv
-        river
+      swaybg
+      obs-studio
+      mpv
+      eww-wayland
+      wl-clipboard
+      hyprpicker
+      wlogout
+      playerctl
+      discord-canary
+      imv
+      river
     ];
 
     sessionPath = [];
