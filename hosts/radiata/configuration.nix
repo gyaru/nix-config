@@ -208,6 +208,7 @@
       man-pages-posix
       ripgrep
       wget
+      jq
       home-manager
       alejandra
       sbctl
@@ -313,6 +314,7 @@
       };
       jack.enable = true;
       pulse.enable = true;
+      wireplumber.enable = true;
     };
   };
 

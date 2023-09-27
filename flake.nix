@@ -23,6 +23,8 @@
     # hyprland
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    # spicetify
+    spicetify-nix.url = github:the-argus/spicetify-nix;
     # lanzaboote
     lanzaboote = {
       url = "github:nix-community/lanzaboote";

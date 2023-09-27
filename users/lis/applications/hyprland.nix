@@ -21,19 +21,18 @@
     workspace = name:5, monitor:DP-1
     workspace = name:6, monitor:HDMI-A-1
 
-    # panel
-    exec-once = eww daemon && eww open bar
+    # set wallpapers
     # wallpaper ultrawide
     exec-once = swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill
     # wallpaper portrait
     exec-once = swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill
 
+    # panel
+    exec-once = eww daemon && eww open bar
+
     # xdph
     exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
-    # set primary monitor for xwayland
-    #exec-once = xrandr --output DP-1 --primary
 
     # inputs
     input {

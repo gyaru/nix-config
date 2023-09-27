@@ -14,6 +14,7 @@
     ./applications/wezterm.nix
     ./applications/firefox
     ./applications/eww
+    ./applications/spicetify.nix
   ];
 
   home = {
@@ -50,16 +51,18 @@
       grim
       slurp
       btop
-      spotify
-      mpv
-      eww-wayland
-      wl-clipboard
-      hyprpicker
-      wlogout
-      playerctl
-      discord-canary
-      imv
-      river
+      swaybginfo:
+        [pipewire] No captures available
+        obs-studio
+        mpv
+        eww-wayland
+        wl-clipboard
+        hyprpicker
+        wlogout
+        playerctl
+        discord-canary
+        imv
+        river
     ];
 
     sessionPath = [];

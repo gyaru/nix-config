@@ -38,7 +38,7 @@
     time))
 
 (defpoll time :interval "10s"
-  "date '+%H:%M %b %d'")
+  "date '+%H:%M'")
   
 (defwindow bar
   :monitor 0
