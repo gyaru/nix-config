@@ -94,7 +94,7 @@
       systemd.enable = true;
       supportedFilesystems = ["btrfs"];
       systemd.services.rollback = {
-        description = "rollback BTRFS root subvolume to a pristine state";
+        description = "rollback BTRFS root subvolume to a clean state";
         wantedBy = [
           "initrd.target"
         ];
@@ -117,6 +117,24 @@
           echo "restoring blank /root subvolume..."
           btrfs subvolume snapshot /mnt/root-blank /mnt/root
           umount /mnt
+        '';
+      };
+      systemd.services.clearHome = {
+        description = "clear BTRFS home subvolume for a clean state";
+        wantedBy = [
+          "initrd.target"
+        ];
+        before = [
+          "rollback.service"
+        ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        # TODO: why is home folder lis never recreated despite declared if i delete it?
+        script = ''
+          mkdir -p /mnt/home
+          mount -t btrfs -o subvol=home /dev/nvme0n1p4 /mnt/home
+          rm -rf /mnt/home/lis/*
+          umount /mnt/home
         '';
       };
       systemd.services.persisted-files = {
@@ -301,8 +319,10 @@
   users.users.root.hashedPasswordFile = "/persist/passwords/root";
   users.users.lis = {
     isNormalUser = true;
+    createHome = true; # this is supposed to be enabled by isNormalUser
     home = "/home/lis";
     shell = pkgs.zsh;
+    group = "users";
     extraGroups = ["wheel" "video" "audio" "realtime" "input"];
     hashedPasswordFile = "/persist/passwords/lis";
   };
