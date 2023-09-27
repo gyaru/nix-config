@@ -3,8 +3,7 @@
   pkgs,
   nixpkgs,
   ...
-}: let
-  addons = inputs.firefox-addons.packages.${pkgs.system};
+} @ args: let
 in {
   programs.firefox = {
     enable = true;
@@ -14,12 +13,12 @@ in {
     profiles.default = {
       id = 0;
       name = "Default";
-      extensions = with addons; [
+      extensions = with (import ./addons.nix args); [
         ublock-origin
         sidebery
         stylus
-        # languagetool # allowUnfree = true; somehow still not applied here, wat.
-        # enhancer-for-youtube
+        languagetool
+        enhancer-for-youtube
         augmented-steam
       ];
       settings = {
@@ -33,7 +32,6 @@ in {
         "browser.startup.homepage" = "about:blank";
         # locale shenanigans, other locales are ass
         "intl.accept_languages" = "en-US, en";
-
         "javascript.use_us_english_locale" = true;
         # disable recommendation pane in about:addons
         "extensions.getAddons.showPane" = false;
@@ -69,6 +67,10 @@ in {
         "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
         # enable style customizations (TODO: check if this is needed or setting userChrome enables this anyway)
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # ui looks
+        "browser.uiCustomization.state" = ''
+          {"placements":{"widget-overflow-fixed-list":["fxa-toolbar-menu-button","sidebar-button"],"unified-extensions-area":["ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":19,"newElementCount":5}
+        '';
       };
       userChrome = ''
         /* hide tabs toolbar for sidebery etc. */

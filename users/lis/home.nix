@@ -12,7 +12,7 @@
     ./applications/vscode.nix
     ./applications/anyrun.nix
     ./applications/wezterm.nix
-    ./applications/firefox.nix
+    ./applications/firefox
     ./applications/eww
   ];
 
