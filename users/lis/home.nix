@@ -96,12 +96,13 @@
       "videos"
       ".gnupg"
       ".ssh"
-      ".mozilla" # TODO: make a more specific one?
-      ".cache"
+      ".mozilla" # firefox TODO: make a more specific one?
+      ".cache" # TODO: check if we actually want this, maybe target specific directories instead
       ".local/share/keyrings"
       ".local/share/direnv"
       ".local/share/wallpapers"
-      ".local/share/TelegramDesktop/tdata"
+      ".local/share/TelegramDesktop/tdata" # telegram
+      ".config/discordcanary" # discord
     ];
     files = [
       # ".local/share/TelegramDesktop/tdata/settingss" # telegram settings, TODO: use folder instead?
