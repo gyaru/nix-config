@@ -98,6 +98,7 @@
       ".ssh"
       ".mozilla" # firefox TODO: make a more specific one?
       ".cache" # TODO: check if we actually want this, maybe target specific directories instead
+      ".vscode" # TODO: check if we actually want to do this, has extension shit etc.
       ".local/share/keyrings"
       ".local/share/direnv"
       ".local/share/wallpapers"
@@ -105,9 +106,9 @@
       ".config/discordcanary" # discord
     ];
     files = [
-      # ".local/share/TelegramDesktop/tdata/settingss" # telegram settings, TODO: use folder instead?
+      ".zsh_history" # zsh history
     ];
-    allowOther = true;
+    allowOther = true; # TODO: check if we actually want to do this
   };
 
   # xdg defaults
