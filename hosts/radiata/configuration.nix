@@ -330,6 +330,10 @@
     extraGroups = ["wheel" "video" "audio" "realtime" "input"];
     hashedPasswordFile = "/persist/passwords/lis";
   };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+  };
 
   # systemd
   systemd = {
