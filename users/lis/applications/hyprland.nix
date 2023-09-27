@@ -121,7 +121,7 @@
     bind = SUPER, O, exec, firefox
 
     # colour picker
-    bind = SUPER, C, exec, hyprpicker | wl-copy
+    bind = SUPER, C, exec, hyprpicker -a
 
     # kill selected window
     bind = SUPER SHIFT, W, killactive,
