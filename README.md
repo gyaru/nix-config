@@ -11,4 +11,3 @@
 * ##### [systemd-boot.extraFiles not working with lanzaboote?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/hosts/radiata/configuration.nix#L169)
 * ##### [systemd-boot.extraEntries not working with lanzaboote?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/hosts/radiata/configuration.nix#L170)
 * ##### [/home/user can't be deleted and then recreated?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/hosts/radiata/configuration.nix#L122)
-* ##### [can't add unfree firefox extensions because of impure?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/users/lis/applications/firefox.nix#L21)
