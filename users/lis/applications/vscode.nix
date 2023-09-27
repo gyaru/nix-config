@@ -24,6 +24,7 @@
       "workbench.startupEditor" = "none";
       "workbench.productIconTheme" = "material-product-icons";
       "window.titleBarStyle" = "custom";
+      "git.autofetch" = true;
       "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
     };
   };
