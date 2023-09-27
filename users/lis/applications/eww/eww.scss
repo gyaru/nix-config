@@ -1,9 +1,12 @@
-$foreground: #bd93f9;
-$background: #282a36;
-$border-color: #44475a;
+$foreground: #931500;
+$background: #E9D4B9;
+$border-color: #931500;
 
 window {
-  background-color: transparent;
+  background-color: $background;
+  color: $foreground;
+  border-bottom: 3px solid $border-color;
+  font-family: 'BalsamiqSans', 'Noto Emoji', 'Maple Mono NF', sans-serif;
 }
 
 //minibox
@@ -56,4 +59,3 @@ window {
   border-style: solid;
   border-width: 3px;
 }
-

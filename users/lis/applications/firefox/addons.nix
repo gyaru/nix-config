@@ -1,4 +1,3 @@
-# partially (mostly) yoinked form NUR, but i dont really trust it
 {
   pkgs,
   lib,

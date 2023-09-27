@@ -53,7 +53,8 @@
       spotify
       mpv
       eww-wayland
-      swaybg
+      wl-clipboard
+      hyprpicker
       wlogout
       playerctl
       discord-canary

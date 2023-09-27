@@ -45,11 +45,11 @@
 
     # general
     general {
-        gaps_in = 15
+        gaps_in = 10
         gaps_out = 15
         border_size = 3
-        col.active_border = 0xFFd7827e
-        col.inactive_border = 0xFFea9d34
+        col.active_border = 0xFF931500
+        col.inactive_border = 0xFFE9D4B9
         layout = dwindle
     }
 
@@ -120,6 +120,9 @@
 
     # browser
     bind = SUPER, O, exec, firefox
+
+    # colour picker
+    bind = SUPER, C, exec, hyprpicker | wl-copy
 
     # kill selected window
     bind = SUPER SHIFT, W, killactive,

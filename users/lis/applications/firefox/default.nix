@@ -66,8 +66,6 @@ in {
         "breakpad.reportURL" = "";
         "browser.tabs.crashReporting.sendReport" = false;
         "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
-        # enable unverified extensions
-        # "xpinstall.signatures.required" = false;
         # enable style customizations (TODO: check if this is needed or setting userChrome enables this anyway)
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # ui looks
@@ -76,6 +74,7 @@ in {
         '';
         "extensions.activeThemeID" = "default-theme@mozilla.org";
         "browser.theme.dark-private-windows" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
       };
       userChrome = ''
         /* hide tabs toolbar for sidebery etc. */

@@ -20,11 +20,11 @@
       "editor.fontFamily" = "'M PLUS 1 Code', 'Maple Mono NF', 'Noto Color Emoji', 'monospace', monospace";
       "workbench.colorTheme" = "Rosé Pine Dawn";
       "workbench.iconTheme" = "material-icon-theme";
-      "git.confirmSync" = false;
       "workbench.startupEditor" = "none";
       "workbench.productIconTheme" = "material-product-icons";
-      "window.titleBarStyle" = "custom";
+      "git.confirmSync" = false;
       "git.autofetch" = true;
+      "window.titleBarStyle" = "custom";
       "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
     };
   };

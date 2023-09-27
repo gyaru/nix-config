@@ -15,13 +15,16 @@
       hidePluginInfo = true;
       layer = "overlay";
       closeOnClick = true;
+      y.absolute = 150;
     };
 
     extraCss = ''
       * {
-        transition: 200ms ease;
-        font-family: Lexend;
-        font-size: 1.3rem;
+        transition: unset;
+        border-radius: unset;
+        font-family: 'BalsamiqSans', sans-serif;
+        font-weight: normal;
+        font-size: 21px;
       }
 
       #window,
@@ -33,23 +36,26 @@
       }
 
       #match:selected {
-        background: rgba(203, 166, 247, 0.7);
+        color: #FBF1E5;
+        background: #931500;
       }
 
-      #match {
-        padding: 3px;
-        border-radius: 5px;
+      #list {
+        border-top: 3px solid #931500;
       }
 
-      #entry, #plugin:hover {
-        border-radius: 16px;
+      #entry {
+        border: unset;
+        box-shadow: unset;
+      }
+
+      #plugin {
+        border: unset;
       }
 
       box#main {
-        background: rgba(30, 30, 46, 0.7);
-        border: 1px solid #1c272b;
-        border-radius: 24px;
-        padding: 8px;
+        background: #E9D4B9;
+        border: 3px solid #931500;
       }
     '';
   };
