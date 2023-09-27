@@ -179,6 +179,7 @@
       hideMounts = true;
       directories = [
         "/var/log"
+        "/etc/secureboot"
         "/var/lib/bluetooth"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
