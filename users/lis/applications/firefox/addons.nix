@@ -388,4 +388,18 @@ in {
       platforms = platforms.all;
     };
   };
+  "seventv-nightly" = buildFirefoxXpiAddon {
+    pname = "7TV Nightly";
+    version = "3.0.10.1000";
+    addonId = "moz-addon@7tv.app";
+    url = "https://extension.7tv.gg/v3.0.10.1000/ext.xpi";
+    sha256 = "dZyjFayvnLebSZHjMTTQFjcsxxpmc1aL5q17mLF3kG8=";
+    meta = with lib; {
+      homepage = "https://7tv.app/";
+      description = "Improve your viewing experience on Twitch & YouTube with new features, emotes, vanity and performance.";
+      license = licenses.asl20;
+      mozPermissions = ["*://*.twitch.tv/*" "*://*.youtube.com/*" "*://*.kick.com/*" "*://*.7tv.app/*" "*://*.7tv.io/*"];
+      platforms = platforms.all;
+    };
+  };
 }

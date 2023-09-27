@@ -7,12 +7,12 @@
 in {
   programs.firefox = {
     enable = true;
-    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+    package = pkgs.wrapFirefox pkgs.firefox-devedition-unwrapped {
       extraPolicies = {ExtensionSettings = {};};
     };
     profiles.default = {
       id = 0;
-      name = "Default";
+      name = "dev-edition-default";
       extensions = with (import ./addons.nix args); [
         ublock-origin
         sidebery
@@ -20,6 +20,7 @@ in {
         languagetool
         enhancer-for-youtube
         augmented-steam
+        seventv-nightly # why does this hate me XD
       ];
       settings = {
         # disable about:config warning because we're adults
@@ -65,12 +66,16 @@ in {
         "breakpad.reportURL" = "";
         "browser.tabs.crashReporting.sendReport" = false;
         "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+        # enable unverified extensions
+        # "xpinstall.signatures.required" = false;
         # enable style customizations (TODO: check if this is needed or setting userChrome enables this anyway)
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # ui looks
         "browser.uiCustomization.state" = ''
-          {"placements":{"widget-overflow-fixed-list":["fxa-toolbar-menu-button","sidebar-button"],"unified-extensions-area":["ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":19,"newElementCount":5}
+          {"placements":{"widget-overflow-fixed-list":["fxa-toolbar-menu-button","sidebar-button"],"unified-extensions-area":["moz-addon_7tv_app-browser-action","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","profiler-button","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action","moz-addon_7tv_app-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":19,"newElementCount":5}
         '';
+        "extensions.activeThemeID" = "default-theme@mozilla.org";
+        "browser.theme.dark-private-windows" = false;
       };
       userChrome = ''
         /* hide tabs toolbar for sidebery etc. */
@@ -82,5 +87,16 @@ in {
         }
       '';
     };
+  };
+  home.persistence."/persist/home/lis" = {
+    directories = [
+      ".mozilla/firefox/default/storage" # fuck u, indexeddb for extension settings are vile
+    ];
+    files = [
+      ".mozilla/firefox/default/cookies.sqlite" # cookies
+      ".mozilla/firefox/default/places.sqlite" # bookmarks/history/more
+      ".mozilla/firefox/default/permissions.sqlite" # pageinfo->permissions
+      ".mozilla/firefox/default/formhistory.sqlite" # form history
+    ];
   };
 }

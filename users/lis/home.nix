@@ -30,9 +30,7 @@
         "videos"
         ".gnupg"
         ".ssh"
-        ".mozilla" # firefox TODO: make a more specific one?
         ".cache" # TODO: check if we actually want this, maybe target specific directories instead
-        ".vscode" # TODO: check if we actually want to do this, has extension shit etc.
         ".local/share/keyrings"
         ".local/share/direnv"
         ".local/share/wallpapers"
