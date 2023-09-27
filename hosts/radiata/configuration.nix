@@ -144,6 +144,7 @@
       nano
       curl
       fd
+      git
       man-pages
       man-pages-posix
       ripgrep
@@ -217,6 +218,7 @@
     command-not-found.enable = false;
     dconf.enable = true;
     zsh.enable = true;
+    fuse.userAllowOther = true; # impermanence
   };
 
   # TODO: move?

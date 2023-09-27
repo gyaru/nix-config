@@ -21,6 +21,7 @@
       "workbench.colorTheme" = "Rosé Pine Dawn";
       "workbench.iconTheme" = "material-icon-theme";
       "git.confirmSync" = false;
+      "workbench.startupEditor" = "none";
       "workbench.productIconTheme" = "material-product-icons";
       "window.titleBarStyle" = "custom";
       "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};

@@ -14,10 +14,29 @@
 
   # root
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e64da22e-6b00-4e94-9e50-58d98b23fcd4";
+    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
     fsType = "btrfs";
+    options = ["subvol=root" "compress=zstd" "noatime"];
   };
-
+  # home
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+    fsType = "btrfs";
+    options = ["subvol=home" "compress=zstd" "noatime"];
+  };
+  # nix
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+    fsType = "btrfs";
+    options = ["subvol=nix" "compress=zstd" "noatime"];
+  };
+  # persist
+  fileSystems."/persist" = {
+    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+    fsType = "btrfs";
+    options = ["subvol=persist" "compress=zstd" "noatime"];
+    neededForBoot = true;
+  };
   # boot
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/601B-12CD";
