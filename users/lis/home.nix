@@ -86,12 +86,35 @@
     ];
   };
 
+  persistence."/persist/home/lis" = {
+    directories = [
+      "downloads"
+      "pictures"
+      "projects"
+      "documents"
+      "videos"
+      ".gnupg"
+      ".ssh"
+      ".mozilla" # TODO: make a more specific one?
+      ".cache"
+      ".local/share/keyrings"
+      ".local/share/direnv"
+      ".local/share/wallpapers"
+      ".local/share/TelegramDesktop/tdata"
+    ];
+    files = [
+      # ".local/share/TelegramDesktop/tdata/settingss" # telegram settings, TODO: use folder instead?
+    ];
+    allowOther = true;
+  };
+
   # xdg defaults
   xdg = {
     userDirs = {
       enable = true;
       documents = "${config.home.homeDirectory}/documents";
-      music = "${config.home.homeDirectory}/music";
+      downloads = "${config.home.homeDirectory}/downloads";
+      music = "${config.home.homeDirectory}/music"; #
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";
     };

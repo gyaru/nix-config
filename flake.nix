@@ -12,8 +12,8 @@
     master.url = "github:nixos/nixpkgs/master";
     stable.url = "github:nixos/nixpkgs/release-23.05";
     unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # fmt
-    nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
+    # impermanence
+    impermanence.url = "github:nix-community/impermanence";
     # home-manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

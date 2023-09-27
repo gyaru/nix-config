@@ -157,6 +157,19 @@
       nix-output-monitor
       edk2-uefi-shell
     ];
+
+    persistence."/persist" = {
+      hideMounts = true;
+      directories = [
+        "/var/log"
+        "/var/lib/bluetooth"
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+      ];
+      files = [
+        "/etc/machine-id"
+      ];
+    };
   };
 
   # fonts
