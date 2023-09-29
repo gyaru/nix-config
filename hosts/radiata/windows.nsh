@@ -1,1 +1,0 @@
-HD0545d0451:EFI\Microsoft\Boot\Bootmgfw.efi

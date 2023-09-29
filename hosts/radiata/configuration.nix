@@ -46,34 +46,52 @@
   };
 
   # root
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    fsType = "btrfs";
-    options = ["subvol=root" "compress=zstd" "noatime"];
-  };
-  # home
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    fsType = "btrfs";
-    options = ["subvol=home" "compress=zstd" "noatime"];
-  };
-  # nix
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    fsType = "btrfs";
-    options = ["subvol=nix" "compress=zstd" "noatime"];
-  };
-  # persist
-  fileSystems."/persist" = {
-    device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    fsType = "btrfs";
-    options = ["subvol=persist" "compress=zstd" "noatime"];
-    neededForBoot = true;
-  };
-  # boot
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/601B-12CD";
-    fsType = "vfat";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+      fsType = "btrfs";
+      options = ["subvol=root" "compress=zstd" "noatime"];
+    };
+    # home
+    "/home" = {
+      device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+      fsType = "btrfs";
+      options = ["subvol=home" "compress=zstd" "noatime"];
+    };
+    # nix
+    "/nix" = {
+      device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+      fsType = "btrfs";
+      options = ["subvol=nix" "compress=zstd" "noatime"];
+    };
+    # persist
+    "/persist" = {
+      device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+      fsType = "btrfs";
+      options = ["subvol=persist" "compress=zstd" "noatime"];
+      neededForBoot = true;
+    };
+    # boot
+    "/boot" = {
+      device = "/dev/disk/by-uuid/601B-12CD";
+      fsType = "vfat";
+      neededForBoot = true;
+    };
+    # efi
+    "/efi" = {
+      device = "/dev/disk/by-uuid/6A71-B54B";
+      fsType = "vfat";
+      neededForBoot = true;
+    };
+    # bind to simplify using anemic windows vfat partition
+    "/efi/EFI/Linux" = {
+      device = "/boot/EFI/Linux";
+      options = ["bind"];
+    };
+    "/efi/EFI/nixos" = {
+      device = "/boot/EFI/nixos";
+      options = ["bind"];
+    };
   };
 
   boot = {
@@ -198,21 +216,12 @@
 
     loader = {
       efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/efi";
       systemd-boot = {
-        configurationLimit = 3;
+        enable = lib.mkForce (config.boot.lanzaboote.enable != true);
+        configurationLimit = 5;
         consoleMode = "max";
         editor = false;
-        # this doesn't actually work with lanzaboote?
-        extraFiles = {"efi/shell/shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";};
-        extraEntries = {
-          "windows.conf" = ''
-            title Windows
-            efi /efi/shell/shell.efi
-            options -nointerrupt -noconsolein -noconsoleout windows.nsh
-          '';
-        };
-      };
-      systemd-boot.enable = lib.mkForce false;
     };
   };
 
@@ -385,7 +394,9 @@
   };
 
   # time
-  time = {timeZone = "Europe/Stockholm";};
+  time = {
+    timeZone = "Europe/Stockholm";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

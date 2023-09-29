@@ -54,6 +54,7 @@
       swaybg
       obs-studio
       mpv
+      eza
       nil
       eww-wayland
       wl-clipboard
