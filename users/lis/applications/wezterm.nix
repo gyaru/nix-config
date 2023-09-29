@@ -14,6 +14,7 @@
       config.font_size = 12
 
       -- disable things we don't really need
+      config.scrollback_lines = 10000
       config.enable_scroll_bar = false
       config.enable_tab_bar = false
       config.check_for_updates = false
@@ -48,6 +49,27 @@
         selection_fg = '#f2e9e1',
         selection_bg = '#d7827e',
         background = '#E9D4B9',
+        foreground = '#931500',
+        ansi = {
+          '#59473B',
+          '#C54532',
+          '#729261',
+          '#5F7E4D',
+          '#10394B',
+          '#96698C',
+          '#75A1AE',
+          '#F5E4D2',
+        },
+        brights = {
+          '#59473B',
+          '#E56A50',
+          '#8BAE84',
+          '#F9C636',
+          '#7197A4',
+          '#E16970',
+          '#193E50',
+          '#F7EEDF',
+        },
       }
 
       return config
