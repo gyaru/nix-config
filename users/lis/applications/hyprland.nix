@@ -48,7 +48,7 @@
         gaps_out = 15
         border_size = 3
         col.active_border = 0xFF931500
-        col.inactive_border = 0xFFE9D4B9
+        col.inactive_border = 0xFF931500
         layout = dwindle
     }
 

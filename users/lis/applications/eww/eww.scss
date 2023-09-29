@@ -1,10 +1,26 @@
+* {
+  all: unset;
+}
+
 $foreground: #931500;
 $background: #E9D4B9;
 $border-color: #931500;
 
 window {
-  background-color: $background;
-  color: $foreground;
+  background: $background;
   border-bottom: 3px solid $border-color;
-  font-family: 'BalsamiqSans', 'Noto Emoji', 'Maple Mono NF', sans-serif;
+  border-left: 3px solid $border-color;
+  border-right: 3px solid $border-color;
+}
+
+.bar_class {
+  color: $foreground;
+  font-family: 'BalsamiqSans', 'Maple Mono NF';
+  font-size: 16px;
+  margin: 0 10px 2px;
+}
+
+.workspace-entry {
+  color: #931500;
+  font-size: 25px;
 }

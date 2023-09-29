@@ -47,6 +47,7 @@
       config.colors = {
         selection_fg = '#f2e9e1',
         selection_bg = '#d7827e',
+        background = '#E9D4B9',
       }
 
       return config

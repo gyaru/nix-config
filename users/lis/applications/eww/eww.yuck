@@ -1,15 +1,54 @@
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/get-workspaces")
+(deflisten current_workspace :initial "" "bash ~/.config/eww/get-active-workspace")
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(defpoll volume :interval "1s"
+  "scripts/getvol")
+(defpoll time :interval "10s"
+  "date '+%H:%M'")
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :exclusive true
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "3411px"
+                      :height "35px"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "15px")
+  (bar :screen 0))
+
 (defwidget bar []
-  (centerbox :orientation "h"
-    (media)
-    (workspaces)
-    (sidepanel)))
+  (box :class "bar_class"
+       :orientation "h"
+       :valign "center"
+  (left)
+  (center)
+  (right)
+    ))
+
+(defwidget left []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "start"
+		 :class "left_modules"
+(media)))
+
 
 (defwidget media []
   (box :class "media"
        :orientation "h"
        :space-evenly false
        :halign "start"
-    {music != "" ? "🎵${music}" : ""}))
+    {music != "" ? " ${music}" : ""}))
+
+(defwidget center []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "center"
+		 :class "center_modules"
+(workspaces)))
 
 (defwidget workspaces []
   (box :class "workspaces"
@@ -17,37 +56,30 @@
        :space-evenly true
        :halign "center"
        :spacing 10
-    (button :onclick "wmctrl -s 0" 1)
-    (button :onclick "wmctrl -s 1" 2)
-    (button :onclick "wmctrl -s 2" 3)
-    (button :onclick "wmctrl -s 3" 4)
-    (button :onclick "wmctrl -s 4" 5)
-    (button :onclick "wmctrl -s 5" 6)
-    (button :onclick "wmctrl -s 6" 7)
-    (button :onclick "wmctrl -s 7" 8)
-    (button :onclick "wmctrl -s 8" 9)))
+  (label :text "${workspaces}${current_workspace}" :visible false)
+  (for workspace in workspaces
+      (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+        (label :text "${workspace.windows > 0 ? "${workspace.id == current_workspace ? "" : ""}" : "${workspace.id == current_workspace ? "" : ""}"}")
+        )
+    )
+  )
+)
 
-(deflisten music :initial ""
-  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(defwidget right []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "end"
+		 :class "right_modules"
+(time)))
 
-(defpoll volume :interval "1s"
-  "scripts/getvol")
+(defwidget time []
+  (box :class "time"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+    {"${time}"}))
 
 (defwidget sidepanel []
   (box :class "sidepanel" :orientation "h" :space-evenly false :halign "end"
     time))
 
-(defpoll time :interval "10s"
-  "date '+%H:%M'")
-  
-(defwindow bar
-  :monitor 0
-  :windowtype "dock"
-  :exclusive true
-  :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "100%"
-                      :height "10px"
-                      :anchor "top center")
-  :reserve (struts :side "top" :distance "15px")
-  (bar))

@@ -63,7 +63,7 @@
       playerctl
       discord-canary
       imv
-      river
+      socat
     ];
 
     sessionPath = [];
