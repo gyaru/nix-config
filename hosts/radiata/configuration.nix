@@ -224,181 +224,181 @@
         editor = false;
       };
     };
-
-    hardware = {
-      cpu.amd.updateMicrocode = true;
-      enableRedistributableFirmware = true;
-      opengl = {
-        enable = true;
-        driSupport = true;
-        driSupport32Bit = true;
-        extraPackages = with pkgs; [
-          amdvlk
-          rocm-opencl-icd
-          rocm-opencl-runtime
-        ];
-      };
-    };
-
-    environment = {
-      binsh = "${pkgs.zsh}/bin/zsh";
-      pathsToLink = ["/share/zsh"];
-      shells = with pkgs; [zsh];
-      systemPackages = with pkgs; [
-        file
-        nano
-        curl
-        fd
-        git
-        man-pages
-        man-pages-posix
-        ripgrep
-        wget
-        jq
-        home-manager
-        alejandra
-        sbctl
-        ntfs3g
-        comma
-        atool
-        unzip
-        nix-output-monitor
-        edk2-uefi-shell
-      ];
-
-      persistence."/persist" = {
-        hideMounts = true;
-        directories = [
-          "/var/log"
-          "/etc/secureboot"
-          "/var/lib/bluetooth"
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-        ];
-      };
-    };
-
-    # fonts
-    fonts = {
-      packages = with pkgs; [
-        noto-fonts
-        noto-fonts-emoji
-        noto-fonts-monochrome-emoji
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        maple-mono-NF
-        (pkgs.callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
-        (pkgs.callPackage ../../pkgs/balsamiqsans {})
-      ];
-      fontconfig = {
-        enable = lib.mkDefault true;
-        defaultFonts = {
-          monospace = ["M PLUS 1 Code"];
-          emoji = ["Noto Color Emoji"];
-        };
-      };
-    };
-
-    # locales
-    i18n = {
-      defaultLocale = "en_US.UTF-8";
-      supportedLocales = ["en_US.UTF-8/UTF-8"];
-      extraLocaleSettings = {
-        LC_ADDRESS = "en_US.UTF-8";
-        LC_COLLATE = "en_US.UTF-8";
-        LC_CTYPE = "en_US.UTF-8";
-        LC_IDENTIFICATION = "en_US.UTF-8";
-        LC_MEASUREMENT = "en_US.UTF-8";
-        LC_MESSAGES = "en_US.UTF-8";
-        LC_MONETARY = "en_US.UTF-8";
-        LC_NAME = "en_US.UTF-8";
-        LC_NUMERIC = "en_US.UTF-8";
-        LC_PAPER = "en_US.UTF-8";
-        LC_TELEPHONE = "en_US.UTF-8";
-        LC_TIME = "en_US.UTF-8";
-      };
-    };
-
-    # set cpu freq governor
-    powerManagement.cpuFreqGovernor = "performance";
-
-    # programs
-    programs = {
-      command-not-found.enable = false;
-      dconf.enable = true;
-      zsh.enable = true;
-      fuse.userAllowOther = true; # impermanence
-    };
-
-    # TODO: move?
-    qt.platformTheme = "qt5ct";
-
-    # security
-    security = {
-      sudo.wheelNeedsPassword = false;
-      polkit.enable = true;
-    };
-
-    # services
-    services = {
-      chrony = {
-        enable = true;
-        servers = [
-          "0.nixos.pool.ntp.org"
-          "1.nixos.pool.ntp.org"
-          "2.nixos.pool.ntp.org"
-          "3.nixos.pool.ntp.org"
-        ];
-      };
-      journald.extraConfig = lib.mkForce "";
-      pipewire = {
-        enable = true;
-        socketActivation = false;
-        alsa = {
-          enable = true;
-          support32Bit = true;
-        };
-        jack.enable = true;
-        pulse.enable = true;
-        wireplumber.enable = true;
-      };
-    };
-
-    # users
-    users.mutableUsers = false;
-    users.users.root.hashedPasswordFile = "/persist/passwords/root";
-    users.users.lis = {
-      isNormalUser = true;
-      createHome = true; # this is supposed to be enabled by isNormalUser
-      home = "/home/lis";
-      shell = pkgs.zsh;
-      group = "users";
-      extraGroups = ["wheel" "video" "audio" "realtime" "input"];
-      hashedPasswordFile = "/persist/passwords/lis";
-    };
-    xdg.portal = {
-      enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-hyprland];
-    };
-
-    # systemd
-    systemd = {
-      services.rtkit-daemon.serviceConfig.ExecStart = [
-        ""
-        "${pkgs.rtkit}/libexec/rtkit-daemon --our-realtime-priority=95 --max-realtime-priority=90"
-      ];
-      user.services = {
-        pipewire.wantedBy = ["default.target"];
-        pipewire-pulse.wantedBy = ["default.target"];
-      };
-    };
-
-    # time
-    time = {
-      timeZone = "Europe/Stockholm";
-    };
-
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    system.stateVersion = "23.05";
   };
+
+  hardware = {
+    cpu.amd.updateMicrocode = true;
+    enableRedistributableFirmware = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+      ];
+    };
+  };
+
+  environment = {
+    binsh = "${pkgs.zsh}/bin/zsh";
+    pathsToLink = ["/share/zsh"];
+    shells = with pkgs; [zsh];
+    systemPackages = with pkgs; [
+      file
+      nano
+      curl
+      fd
+      git
+      man-pages
+      man-pages-posix
+      ripgrep
+      wget
+      jq
+      home-manager
+      alejandra
+      sbctl
+      ntfs3g
+      comma
+      atool
+      unzip
+      nix-output-monitor
+      edk2-uefi-shell
+    ];
+
+    persistence."/persist" = {
+      hideMounts = true;
+      directories = [
+        "/var/log"
+        "/etc/secureboot"
+        "/var/lib/bluetooth"
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+      ];
+    };
+  };
+
+  # fonts
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-emoji
+      noto-fonts-monochrome-emoji
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      maple-mono-NF
+      (pkgs.callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
+      (pkgs.callPackage ../../pkgs/balsamiqsans {})
+    ];
+    fontconfig = {
+      enable = lib.mkDefault true;
+      defaultFonts = {
+        monospace = ["M PLUS 1 Code"];
+        emoji = ["Noto Color Emoji"];
+      };
+    };
+  };
+
+  # locales
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    supportedLocales = ["en_US.UTF-8/UTF-8"];
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_COLLATE = "en_US.UTF-8";
+      LC_CTYPE = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MESSAGES = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "en_US.UTF-8";
+    };
+  };
+
+  # set cpu freq governor
+  powerManagement.cpuFreqGovernor = "performance";
+
+  # programs
+  programs = {
+    command-not-found.enable = false;
+    dconf.enable = true;
+    zsh.enable = true;
+    fuse.userAllowOther = true; # impermanence
+  };
+
+  # TODO: move?
+  qt.platformTheme = "qt5ct";
+
+  # security
+  security = {
+    sudo.wheelNeedsPassword = false;
+    polkit.enable = true;
+  };
+
+  # services
+  services = {
+    chrony = {
+      enable = true;
+      servers = [
+        "0.nixos.pool.ntp.org"
+        "1.nixos.pool.ntp.org"
+        "2.nixos.pool.ntp.org"
+        "3.nixos.pool.ntp.org"
+      ];
+    };
+    journald.extraConfig = lib.mkForce "";
+    pipewire = {
+      enable = true;
+      socketActivation = false;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      jack.enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+    };
+  };
+
+  # users
+  users.mutableUsers = false;
+  users.users.root.hashedPasswordFile = "/persist/passwords/root";
+  users.users.lis = {
+    isNormalUser = true;
+    createHome = true; # this is supposed to be enabled by isNormalUser
+    home = "/home/lis";
+    shell = pkgs.zsh;
+    group = "users";
+    extraGroups = ["wheel" "video" "audio" "realtime" "input"];
+    hashedPasswordFile = "/persist/passwords/lis";
+  };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+  };
+
+  # systemd
+  systemd = {
+    services.rtkit-daemon.serviceConfig.ExecStart = [
+      ""
+      "${pkgs.rtkit}/libexec/rtkit-daemon --our-realtime-priority=95 --max-realtime-priority=90"
+    ];
+    user.services = {
+      pipewire.wantedBy = ["default.target"];
+      pipewire-pulse.wantedBy = ["default.target"];
+    };
+  };
+
+  # time
+  time = {
+    timeZone = "Europe/Stockholm";
+  };
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "23.05";
 }

@@ -154,6 +154,12 @@
     bind = SUPER, up, movefocus, u
     bind = SUPER, down, movefocus, d
 
+    # preselect with arrow keys
+    bind = SUPER SHIFT, left, layoutmsg, preselect l
+    bind = SUPER SHIFT, right, layoutmsg, preselect r
+    bind = SUPER SHIFT, up, layoutmsg, preselect u
+    bind = SUPER SHIFT, down, layoutmsg, preselect d
+
     # switch workspaces
     bind = SUPER, 1, workspace, 1
     bind = SUPER, 2, workspace, 2
