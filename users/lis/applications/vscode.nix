@@ -8,8 +8,6 @@
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       mvllow.rose-pine
-      bbenoist.nix
-      kamadorueda.alejandra
       eamodio.gitlens
       pkief.material-product-icons
       pkief.material-icon-theme
@@ -26,9 +24,16 @@
       "git.confirmSync" = false;
       "git.autofetch" = true;
       "window.titleBarStyle" = "custom";
-      "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
+      "[nix]" = {"editor.defaultFormatter" = "jnoortheen.nix-ide";};
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
+      "nix.serverSettings" = {
+        "nil" = {
+          "formatting" = {
+            "command" = ["alejandra"];
+          };
+        };
+      };
     };
   };
 }
