@@ -13,6 +13,7 @@
       eamodio.gitlens
       pkief.material-product-icons
       pkief.material-icon-theme
+      jnoortheen.nix-ide
     ];
     userSettings = {
       "editor.fontSize" = 16;
@@ -26,6 +27,8 @@
       "git.autofetch" = true;
       "window.titleBarStyle" = "custom";
       "[nix]" = {"editor.defaultFormatter" = "kamadorueda.alejandra";};
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "nil";
     };
   };
 }

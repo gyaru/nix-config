@@ -54,6 +54,7 @@
       swaybg
       obs-studio
       mpv
+      nil
       eww-wayland
       wl-clipboard
       hyprpicker
