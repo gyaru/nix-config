@@ -1,4 +1,3 @@
-# This file defines overlays
 {inputs, ...}: {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs {pkgs = final;};
@@ -7,10 +6,7 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    # discord, fixes firefox + adds openasar and vencord
-    discord-canary = prev.discord-canary.override (oldAttrs: rec {
-      nss = prev.nss_latest;
-    });
+    #
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

@@ -61,7 +61,7 @@
       hyprpicker
       wlogout
       playerctl
-      discord-canary
+      discord
       imv
       socat
     ];
