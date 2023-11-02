@@ -6,7 +6,9 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    #
+    discord = prev.discord.override (oldAttrs: rec {
+      nss = final.nss_latest;
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

@@ -38,7 +38,7 @@
     input {
         kb_layout = us,se
         follow_mouse = 1
-        sensitivity = -0.5 # hm
+        force_no_accel = true
         repeat_delay = 250
     }
 

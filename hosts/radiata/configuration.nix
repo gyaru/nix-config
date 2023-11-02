@@ -235,8 +235,8 @@
       driSupport32Bit = true;
       extraPackages = with pkgs; [
         amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        rocmPackages.clr.icd
+        rocmPackages.clr
       ];
     };
   };
@@ -363,6 +363,7 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
+    flatpak.enable = true;
   };
 
   # users
@@ -400,5 +401,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }

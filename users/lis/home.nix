@@ -60,6 +60,7 @@
       wl-clipboard
       hyprpicker
       wlogout
+      flatpak
       playerctl
       discord
       imv
