@@ -387,6 +387,26 @@ in {
       platforms = platforms.all;
     };
   };
+  "sponsorblock" = buildFirefoxXpiAddon {
+    pname = "sponsorblock";
+    version = "5.4.25";
+    addonId = "sponsorBlocker@ajay.app";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4185110/sponsorblock-5.4.25.xpi";
+    sha256 = "7bb6d42b76acca487be8e11af23db9c3df916b40e3665446d6335d3e1c7a16f4";
+    meta = with lib; {
+      homepage = "https://sponsor.ajay.app";
+      description = "Easily skip YouTube video sponsors. When you visit a YouTube video, the extension will check the database for reported sponsors and automatically skip known sponsors. You can also report sponsors in videos.\n\nOther browsers: https://sponsor.ajay.app";
+      license = licenses.lgpl3;
+      mozPermissions = [
+        "storage"
+        "https://sponsor.ajay.app/*"
+        "scripting"
+        "https://*.youtube.com/*"
+        "https://www.youtube-nocookie.com/embed/*"
+      ];
+      platforms = platforms.all;
+    };
+  };
   "seventv-nightly" = buildFirefoxXpiAddon {
     pname = "7TV Nightly";
     version = "3.0.10.1000";
