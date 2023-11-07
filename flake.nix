@@ -12,29 +12,27 @@
     master.url = "github:nixos/nixpkgs/master";
     stable.url = "github:nixos/nixpkgs/release-23.05";
     unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # impermanence
     impermanence.url = "github:nix-community/impermanence";
-    # home-manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # anyrun
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
-    # hyprland
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    # spicetify
     spicetify-nix.url = "github:the-argus/spicetify-nix";
-    # lanzaboote
+    agenix.url = "github:ryantm/agenix";
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "github:Aylur/ags";
+    ags.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     self,
     nixpkgs,
+    agenix,
     home-manager,
     impermanence,
     ...
@@ -60,6 +58,7 @@
         modules = [
           ./hosts/radiata/configuration.nix
           inputs.lanzaboote.nixosModules.lanzaboote
+          agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

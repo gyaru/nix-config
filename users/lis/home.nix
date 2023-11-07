@@ -13,7 +13,7 @@
     ./applications/anyrun.nix
     ./applications/wezterm.nix
     ./applications/firefox
-    ./applications/eww
+    ./applications/ags.nix
     ./applications/spicetify.nix
   ];
 
@@ -35,8 +35,9 @@
         ".local/share/keyrings"
         ".local/share/direnv"
         ".local/share/wallpapers"
+        ".runelite"
         ".local/share/TelegramDesktop/tdata" # telegram
-        ".config/discordcanary" # discord
+        ".config/ArmCord" # discord
         ".config/spotify" # spotify
       ];
       files = [
@@ -56,15 +57,15 @@
       mpv
       eza
       nil
-      eww-wayland
       wl-clipboard
       hyprpicker
       wlogout
       flatpak
       playerctl
-      discord
       imv
       socat
+      runelite
+      armcord
     ];
 
     sessionPath = [];

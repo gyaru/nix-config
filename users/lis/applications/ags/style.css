@@ -1,0 +1,71 @@
+* {
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    padding: unset;
+    outline: unset;
+}
+
+.bar {
+    background-color: #EEDCC5;
+    color: #931500;
+    font-family: 'BalsamiqSans', 'Maple Mono NF';
+    font-size: 16px;
+    padding: 5px;
+    border-bottom: 3px solid #931500;
+}
+
+label {
+    background-color: transparent;
+}
+
+.media {
+    padding-left: 8px;
+}
+
+.workspaces box {
+    background-color: #bd7062;
+    border-bottom: 3px solid #931500;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: 15px;
+}
+
+.workspaces box.focused {
+    background-color: #931500;
+}
+
+.volume {
+    color: #931500;
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    padding: unset;
+    outline: unset;
+}
+
+.notification image {
+    color: yellow;
+    margin-left: 1em;
+}
+
+.battery progressbar {
+    margin: 0 6px;
+}
+
+.clock {
+    min-width: 120px;
+}
+
+progress,
+highlight {
+    background-color: aqua;
+}
+
+.tray button {
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    padding: unset;
+    outline: unset;
+}

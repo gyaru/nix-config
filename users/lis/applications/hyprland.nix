@@ -28,7 +28,7 @@
     exec-once = swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill
 
     # panel
-    exec-once = eww daemon && eww open bar
+    exec-once = ags
 
     # xdph
     exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -100,6 +100,7 @@
     windowrulev2 = forceinput, class:^(league of legends.exe)$ # league of legends - game
     windowrulev2 = fullscreen, class:^(league of legends.exe)$ # league of legends - game
     windowrulev2 = workspace 5, class:^(league of legends.exe)$ # league of legends` - game
+    windowrulev2 = float, title:^(RuneLite)$ - runescape
 
     # application workspaces
     windowrulev2 = workspace 4, class:^(Steam)$
