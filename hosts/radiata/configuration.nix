@@ -52,12 +52,6 @@
       fsType = "btrfs";
       options = ["subvol=root" "compress=zstd" "noatime" "discard=async" "space_cache=v2"];
     };
-    # home
-    #"/home" = {
-    #  device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    #  fsType = "btrfs";
-    #  options = ["subvol=home" "compress=zstd" "noatime" "discard=async" "space_cache=v2"];
-    #};
     # nix
     "/nix" = {
       device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
@@ -84,14 +78,14 @@
       neededForBoot = true;
     };
     # bind to simplify using anemic windows vfat partition
-    #"/efi/EFI/Linux" = {
-    #  device = "/boot/EFI/Linux";
-    #  options = ["bind"];
-    #};
-    #"/efi/EFI/nixos" = {
-    #  device = "/boot/EFI/nixos";
-    #  options = ["bind"];
-    #};
+    "/efi/EFI/Linux" = {
+      device = "/boot/EFI/Linux";
+      options = ["bind"];
+    };
+    "/efi/EFI/nixos" = {
+      device = "/boot/EFI/nixos";
+      options = ["bind"];
+    };
   };
 
   boot = {
@@ -301,14 +295,6 @@
       LC_TELEPHONE = "en_US.UTF-8";
       LC_TIME = "en_US.UTF-8";
     };
-    inputMethod = {
-      enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        fcitx5-chinese-addons
-      ];
-    };
   };
 
   # set cpu freq governor
@@ -321,9 +307,6 @@
     zsh.enable = true;
     fuse.userAllowOther = true; # impermanence
   };
-
-  # TODO: move?
-  qt.platformTheme = "qt5ct";
 
   # security
   security = {
@@ -362,8 +345,6 @@
   users.users.root.hashedPasswordFile = "/persist/passwords/root";
   users.users.lis = {
     isNormalUser = true;
-    createHome = true; # this is supposed to be enabled by isNormalUser
-    home = "/home/lis";
     shell = pkgs.zsh;
     group = "users";
     extraGroups = ["wheel" "video" "audio" "realtime" "input"];

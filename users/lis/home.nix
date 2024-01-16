@@ -76,10 +76,9 @@
 
     sessionVariables = {
       BROWSER = "firefox";
-      QT_QPA_PLATFORMTHEME = "qt5ct";
       RUSTUP_HOME = "${config.home.homeDirectory}/.local/share/rustup";
       XCURSOR_SIZE = "16";
-      XCURSOR_THEME = "Adwaita";
+      XCURSOR_THEME = "Simp1e-Gruvbox-Dark";
       NIXOS_OZONE_WL = "1";
       MOZ_USE_XINPUT2 = "1";
       XDG_CACHE_HOME = "$HOME/.cache";
@@ -130,8 +129,20 @@
     ];
   };
 
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
+  };
+
   gtk = {
-    theme.package = [pkgs.adw-gtk3];
+    enable = true;
+    theme.name = "adw-gtk3";
+    theme.package = pkgs.adw-gtk3;
+    cursorTheme.package = pkgs.simp1e-cursors;
+    cursorTheme.name = "Simp1e-Gruvbox-Dark"; # TODO: ref previous
+    cursorTheme.size = 16;
   };
 
   xdg = {
@@ -145,13 +156,13 @@
     };
   };
 
-  systemd.user.services.fcitx5-daemon = {
-    Unit = {
-      Description = "Fcitx5 input method editor";
-      PartOf = ["graphical-session.target"];
-    };
-    Service.ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
-    Install.WantedBy = ["graphical-session.target"];
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+      fcitx5-chinese-addons
+    ];
   };
 
   systemd.user.startServices = "sd-switch";
