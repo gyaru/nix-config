@@ -2,7 +2,6 @@
   description = "lis' nix flakes";
 
   inputs = {
-    # nixpkgs
     nixpkgs.follows = "master";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -20,11 +19,13 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     spicetify-nix.url = "github:the-argus/spicetify-nix";
-    agenix.url = "github:ryantm/agenix";
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #flake-utils.url = "github:numtide/flake-utils";
+    #agenix.url = "github:ryantm/agenix";
+    #agenix.inputs.nixpkgs.follows = "nixpkgs";
+    #agenix-rekey.url = "github:oddlama/agenix-rekey";
+    #agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     ags.url = "github:Aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -32,7 +33,8 @@
   outputs = {
     self,
     nixpkgs,
-    agenix,
+    #agenix,
+    #agenix-rekey,
     home-manager,
     impermanence,
     ...
@@ -58,7 +60,8 @@
         modules = [
           ./hosts/radiata/configuration.nix
           inputs.lanzaboote.nixosModules.lanzaboote
-          agenix.nixosModules.default
+          #agenix.nixosModules.default
+          #agenix-rekey.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

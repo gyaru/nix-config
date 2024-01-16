@@ -23,27 +23,30 @@
 
     # impermanence is cool or something
     persistence."/persist/home/lis" = {
-      directories = [
-        "downloads"
-        "pictures"
-        "projects"
-        "documents"
-        "videos"
-        ".gnupg"
-        ".ssh"
-        ".cache" # TODO: check if we actually want this, maybe target specific directories instead
-        ".local/share/keyrings"
-        ".local/share/direnv"
-        ".local/share/wallpapers"
-        ".runelite"
-        ".local/share/TelegramDesktop/tdata" # telegram
-        ".config/ArmCord" # discord
-        ".config/spotify" # spotify
-      ];
+      directories =
+        [
+          "downloads"
+          "pictures"
+          "projects"
+          "documents"
+          "videos"
+          ".gnupg"
+          ".ssh"
+          ".runelite"
+        ]
+        ++ lib.forEach ["keyrings" "direnv" "wallpapers" "TelegramDesktop"] (
+          x: ".local/share/${x}"
+        )
+        ++ lib.forEach ["ArmCord" "spotify"] (
+          x: ".config/${x}"
+        )
+        ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index" "mozilla"] (
+          x: ".cache/${x}"
+        );
       files = [
         ".zsh_history" # zsh history
       ];
-      allowOther = true; # TODO: check if we actually want to do this
+      allowOther = true;
     };
 
     packages = with pkgs; [
@@ -66,6 +69,7 @@
       socat
       runelite
       armcord
+      tealdeer
     ];
 
     sessionPath = [];
@@ -82,6 +86,7 @@
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
       XDG_STATE_HOME = "$HOME/.local/state";
+      GLFW_IM_MODULE = "ibus";
     };
   };
 
@@ -106,7 +111,7 @@
   };
 
   # fzf
-  programs.fzf = {enable = true;};
+  programs.fzf.enable = true;
 
   # zsh
   programs.zsh = {
@@ -125,20 +130,31 @@
     ];
   };
 
-  # xdg defaults
+  gtk = {
+    theme.package = [pkgs.adw-gtk3];
+  };
+
   xdg = {
     userDirs = {
       enable = true;
       documents = "${config.home.homeDirectory}/documents";
       download = "${config.home.homeDirectory}/downloads";
-      music = "${config.home.homeDirectory}/music"; #
+      music = "${config.home.homeDirectory}/music";
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";
     };
   };
 
+  systemd.user.services.fcitx5-daemon = {
+    Unit = {
+      Description = "Fcitx5 input method editor";
+      PartOf = ["graphical-session.target"];
+    };
+    Service.ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
+    Install.WantedBy = ["graphical-session.target"];
+  };
+
   systemd.user.startServices = "sd-switch";
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }

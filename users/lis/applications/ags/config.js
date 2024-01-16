@@ -22,25 +22,8 @@ const Workspaces = () => Widget.Box({
 const Clock = () => Widget.Label({
     className: 'clock',
     connections: [
-        [1000, self => execAsync(['date', '+%b%e - %H:%M:%S'])
+        [1000, self => execAsync(['date', '+%H:%M'])
             .then(date => self.label = date).catch(console.error)],
-    ],
-});
-
-const Notification = () => Widget.Box({
-    className: 'notification',
-    children: [
-        Widget.Icon({
-            icon: 'preferences-system-notifications-symbolic',
-            connections: [
-                [Notifications, self => self.visible = Notifications.popups.length > 0],
-            ],
-        }),
-        Widget.Label({
-            connections: [[Notifications, self => {
-                self.label = Notifications.popups[0]?.summary || '';
-            }]],
-        }),
     ],
 });
 
@@ -105,7 +88,6 @@ const Center = () => Widget.Box({
 const Right = () => Widget.Box({
     hpack: 'end',
     children: [
-        Notification(),
         Volume(),
         Clock(),
         SysTray(),
@@ -117,7 +99,7 @@ const Bar = ({ monitor } = {}) => Widget.Window({
     className: 'bar',
     monitor,
     anchor: ['top', 'left', 'right'],
-    exclusive: true,
+    exclusivity: 'exclusive',
     child: Widget.CenterBox({
         startWidget: Left(),
         centerWidget: Center(),

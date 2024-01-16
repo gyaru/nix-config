@@ -16,6 +16,7 @@
       -- disable things we don't really need
       config.scrollback_lines = 10000
       config.enable_scroll_bar = false
+      config.enable_wayland = false -- lel
       config.enable_tab_bar = false
       config.check_for_updates = false
       config.window_close_confirmation = "NeverPrompt"

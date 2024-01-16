@@ -7,19 +7,102 @@
   imports = [inputs.hyprland.homeManagerModules.default];
   home.packages = with pkgs; [jaq xorg.xprop];
 
-  # hyprland config
+  wayland.windowManager.hyprland.settings = {
+    general = {
+      border_size = 3;
+      gaps_in = 10;
+      gaps_out = 10;
+      "col.active_border" = "0xFF931500";
+      "col.inactive_border" = "0xFF931500";
+      layout = "dwindle";
+    };
+    decoration = {
+      drop_shadow = false;
+      blur = {
+        enabled = false;
+      };
+    };
+    animations = {
+      enabled = false;
+    };
+    input = {
+      follow_mouse = 1;
+      force_no_accel = true;
+      repeat_delay = 250;
+    };
+    misc = {
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+      vrr = 0;
+    };
+    dwindle = {
+      pseudotile = false;
+      preserve_split = "yes";
+      no_gaps_when_only = false;
+    };
+    bind = [
+      "SUPER, Return, exec, wezterm"
+      "SUPER, Space, exec, anyrun"
+      "SUPER, O, exec, firefox"
+      "SUPER, C, exec, hyprpicker -a"
+      "SUPER SHIFT, W, killactive,"
+      "SUPER SHIFT, M, exec, wlogout"
+      "SUPER, F11, exec, grim -o DP-1" # fix notification
+      "SUPER, F, togglefloating,"
+      "SUPER, P, pseudo,"
+      "SUPER, S, togglesplit," # dwindle
+      # move focus with arrow keys
+      "SUPER, left, movefocus, l"
+      "SUPER, right, movefocus, r"
+      "SUPER, up, movefocus, u"
+      "SUPER, down, movefocus, d"
+      # preselect with arrow keys
+      "SUPER SHIFT, left, layoutmsg, preselect l"
+      "SUPER SHIFT, right, layoutmsg, preselect r"
+      "SUPER SHIFT, up, layoutmsg, preselect u"
+      "SUPER SHIFT, down, layoutmsg, preselect d"
+      # switch workspaces
+      "SUPER, 1, workspace, 1"
+      "SUPER, 2, workspace, 2"
+      "SUPER, 3, workspace, 3"
+      "SUPER, 4, workspace, 4"
+      "SUPER, 5, workspace, 5"
+      "SUPER, 6, workspace, 6"
+      # send active window to given workspace
+      "SUPER SHIFT, 1, movetoworkspacesilent, 1"
+      "SUPER SHIFT, 2, movetoworkspacesilent, 2"
+      "SUPER SHIFT, 3, movetoworkspacesilent, 3"
+      "SUPER SHIFT, 4, movetoworkspacesilent, 4"
+      "SUPER SHIFT, 5, movetoworkspacesilent, 5"
+      "SUPER SHIFT, 6, movetoworkspacesilent, 6"
+    ];
+    bindm = [
+      "SUPER, mouse:272, movewindow"
+      "SUPER, mouse:273, resizewindow"
+    ];
+    bindl = [
+      # volume control
+      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      # media
+      ", XF86AudioNext, exec, playerctl next -i chromium"
+      ", XF86AudioPrev, exec, playerctl previous -i chromium"
+      ", XF86AudioPlay, exec, playerctl play-pause -i chromium"
+    ];
+    workspace = [
+      "name:1, monitor:DP-1"
+      "name:2, monitor:DP-1"
+      "name:3, monitor:DP-1"
+      "name:4, monitor:DP-1"
+      "name:5, monitor:DP-1"
+      "name:6, monitor:HDMI-A-1"
+    ];
+  };
+
   wayland.windowManager.hyprland.extraConfig = ''
     # displays
     monitor = DP-1, 3440x1440@160, 1440x450, 1, bitdepth, 8
     monitor = HDMI-A-1, 2560x1440@60, 0x0, 1, transform, 1, bitdepth, 8
-
-    # workspaces
-    workspace = name:1, monitor:DP-1
-    workspace = name:2, monitor:DP-1
-    workspace = name:3, monitor:DP-1
-    workspace = name:4, monitor:DP-1
-    workspace = name:5, monitor:DP-1
-    workspace = name:6, monitor:HDMI-A-1
 
     # set wallpapers
     # wallpaper ultrawide
@@ -33,43 +116,6 @@
     # xdph
     exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
-    # inputs
-    input {
-        kb_layout = us,se
-        follow_mouse = 1
-        force_no_accel = true
-        repeat_delay = 250
-    }
-
-    # general
-    general {
-        gaps_in = 10
-        gaps_out = 15
-        border_size = 3
-        col.active_border = 0xFF931500
-        col.inactive_border = 0xFF931500
-        layout = dwindle
-    }
-
-    # misc
-    misc {
-        disable_hyprland_logo = true
-        vrr = 0
-        key_press_enables_dpms = true
-        mouse_move_enables_dpms = true
-    }
-
-    # animations (why)
-    animations {
-        enabled = false
-    }
-
-    # dwindle layout
-    dwindle {
-        pseudotile = yes
-        preserve_split = yes
-    }
 
     # windows rules
     # fix telegram media preview
@@ -108,93 +154,11 @@
     windowrulev2 = workspace 6, class:^(Spotify)$
     windowrulev2 = workspace 5, title:^(Steam Big Picture)$
 
-    # bindings
-    # terminal
-    bind = SUPER, Return, exec, wezterm
-
-    # application launcher
-    bind = SUPER, Space, exec, anyrun
-
-    # browser
-    bind = SUPER, O, exec, firefox
-
-    # colour picker
-    bind = SUPER, C, exec, hyprpicker -a
-
-    # kill selected window
-    bind = SUPER SHIFT, W, killactive,
-
-    # quit hyprland
-    bind = SUPER SHIFT, M, exec, wlogout
-
-    # fullscreen screen shot
-    bind = SUPER, F11, exec, grim -o DP-1 # fix notification
-
     # region screenshot
     bind = SUPER SHIFT, S, exec, grim -g "$(slurp)" # fix notification
 
-    # fullscreen video recording
-
-    # region video recording
-    # shift ctrl super s?
-
-    # toggle focus to floating
-    bind = SUPER, F, togglefloating,
-
-    # toggle focus to pseudo tiled
-    bind = SUPER, P, pseudo,
-
-    # toggle split
-    bind = SUPER, S, togglesplit, # dwindle
-
-    # toggle fullscreen
-
-    # move focus with arrow keys
-    bind = SUPER, left, movefocus, l
-    bind = SUPER, right, movefocus, r
-    bind = SUPER, up, movefocus, u
-    bind = SUPER, down, movefocus, d
-
-    # preselect with arrow keys
-    bind = SUPER SHIFT, left, layoutmsg, preselect l
-    bind = SUPER SHIFT, right, layoutmsg, preselect r
-    bind = SUPER SHIFT, up, layoutmsg, preselect u
-    bind = SUPER SHIFT, down, layoutmsg, preselect d
-
-    # switch workspaces
-    bind = SUPER, 1, workspace, 1
-    bind = SUPER, 2, workspace, 2
-    bind = SUPER, 3, workspace, 3
-    bind = SUPER, 4, workspace, 4
-    bind = SUPER, 5, workspace, 5
-    bind = SUPER, 6, workspace, 6
-    bind = SUPER, 7, workspace, 7
-    bind = SUPER, 8, workspace, 8
-    bind = SUPER, 9, workspace, 9
-    bind = SUPER, 0, workspace, 10
-
-    # send active window to given workspace
-    bind = SUPER SHIFT, 1, movetoworkspacesilent, 1
-    bind = SUPER SHIFT, 2, movetoworkspacesilent, 2
-    bind = SUPER SHIFT, 3, movetoworkspacesilent, 3
-    bind = SUPER SHIFT, 4, movetoworkspacesilent, 4
-    bind = SUPER SHIFT, 5, movetoworkspacesilent, 5
-    bind = SUPER SHIFT, 6, movetoworkspacesilent, 6
-
-    # move and resize windows with mouse
-    bindm = SUPER, mouse:272, movewindow
-    bindm = SUPER, mouse:273, resizewindow
-
-    # volume control
-    bindl =, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-    bindl =, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-    # media
-    bindl =, XF86AudioNext, exec, playerctl next -i chromium
-    bindl =, XF86AudioPrev, exec, playerctl previous -i chromium
-    bindl =, XF86AudioPlay, exec, playerctl play-pause -i chromium
-
     # toggle keyboard layout
-    bind=, XF86Calculator, exec, hyprctl switchxkblayout kbdfans-kbd67mkiirgb-v2 next
+    #bind=, XF86Calculator, exec, hyprctl switchxkblayout kbdfans-kbd67mkiirgb-v2 next
   '';
 
   # enable hyprland

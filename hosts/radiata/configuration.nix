@@ -53,11 +53,11 @@
       options = ["subvol=root" "compress=zstd" "noatime" "discard=async" "space_cache=v2"];
     };
     # home
-    "/home" = {
-      device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
-      fsType = "btrfs";
-      options = ["subvol=home" "compress=zstd" "noatime" "discard=async" "space_cache=v2"];
-    };
+    #"/home" = {
+    #  device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
+    #  fsType = "btrfs";
+    #  options = ["subvol=home" "compress=zstd" "noatime" "discard=async" "space_cache=v2"];
+    #};
     # nix
     "/nix" = {
       device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
@@ -84,14 +84,14 @@
       neededForBoot = true;
     };
     # bind to simplify using anemic windows vfat partition
-    "/efi/EFI/Linux" = {
-      device = "/boot/EFI/Linux";
-      options = ["bind"];
-    };
-    "/efi/EFI/nixos" = {
-      device = "/boot/EFI/nixos";
-      options = ["bind"];
-    };
+    #"/efi/EFI/Linux" = {
+    #  device = "/boot/EFI/Linux";
+    #  options = ["bind"];
+    #};
+    #"/efi/EFI/nixos" = {
+    #  device = "/boot/EFI/nixos";
+    #  options = ["bind"];
+    #};
   };
 
   boot = {
@@ -174,24 +174,6 @@
           umount /mnt
         '';
       };
-      systemd.services.clearHome = {
-        description = "clear BTRFS home subvolume for a clean state";
-        wantedBy = [
-          "initrd.target"
-        ];
-        before = [
-          "rollback.service"
-        ];
-        unitConfig.DefaultDependencies = "no";
-        serviceConfig.Type = "oneshot";
-        # TODO: why is home folder lis never recreated despite declared if i delete it?
-        script = ''
-          mkdir -p /mnt/home
-          mount -t btrfs -o subvol=home /dev/nvme0n1p4 /mnt/home
-          rm -rf /mnt/home/lis/*
-          umount /mnt/home
-        '';
-      };
       systemd.services.persisted-files = {
         description = "hard-link persisted files from /persist";
         wantedBy = [
@@ -219,7 +201,7 @@
       efi.efiSysMountPoint = "/efi";
       systemd-boot = {
         enable = lib.mkForce (config.boot.lanzaboote.enable != true);
-        configurationLimit = 5;
+        configurationLimit = 2;
         consoleMode = "max";
         editor = false;
       };
@@ -319,6 +301,14 @@
       LC_TELEPHONE = "en_US.UTF-8";
       LC_TIME = "en_US.UTF-8";
     };
+    inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        fcitx5-chinese-addons
+      ];
+    };
   };
 
   # set cpu freq governor
@@ -382,6 +372,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    configPackages = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   # systemd
@@ -401,6 +392,5 @@
     timeZone = "Europe/Stockholm";
   };
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }
