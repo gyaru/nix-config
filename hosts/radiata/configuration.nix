@@ -45,8 +45,8 @@
     ]; # cloudflare, google as backup
   };
 
-  # root
   fileSystems = {
+    # root
     "/" = {
       device = "/dev/disk/by-uuid/caf259ee-b2be-4cf8-b41a-752a09d344a7";
       fsType = "btrfs";
@@ -78,14 +78,14 @@
       neededForBoot = true;
     };
     # bind to simplify using anemic windows vfat partition
-    "/efi/EFI/Linux" = {
-      device = "/boot/EFI/Linux";
-      options = ["bind"];
-    };
-    "/efi/EFI/nixos" = {
-      device = "/boot/EFI/nixos";
-      options = ["bind"];
-    };
+    #"/efi/EFI/Linux" = {
+    #  device = "/boot/EFI/Linux";
+    #  options = ["bind"];
+    #};
+    #"/efi/EFI/nixos" = {
+    #  device = "/boot/EFI/nixos";
+    #  options = ["bind"];
+    #};
   };
 
   boot = {
