@@ -2,18 +2,21 @@
   description = "lis' nix flakes";
 
   inputs = {
-    nixpkgs.follows = "master";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.follows = "stable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     master.url = "github:nixos/nixpkgs/master";
-    stable.url = "github:nixos/nixpkgs/release-23.05";
+    stable.url = "github:nixos/nixpkgs/release-23.11";
     unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     impermanence.url = "github:nix-community/impermanence";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.url = "github:hyprwm/Hyprland";
@@ -28,11 +31,13 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     ags.url = "github:Aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
   };
 
   outputs = {
     self,
     nixpkgs,
+    darwin,
     #agenix,
     #agenix-rekey,
     home-manager,
@@ -40,7 +45,7 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    systems = ["x86_64-linux"];
+    systems = ["x86_64-linux" "aarch64-darwin"];
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
     packages =
@@ -67,7 +72,23 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.lis = import ./users/lis/home.nix;
+            home-manager.users.lis = import ./home/lis;
+          }
+        ];
+      };
+    };
+    darwinConfigurations = {
+      carrot = darwin.lib.darwinSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/carrot/configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs.overlays = [inputs.nixpkgs-firefox-darwin.overlay];
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {inherit inputs;};
+            home-manager.users.bun = import ./home/bun;
           }
         ];
       };

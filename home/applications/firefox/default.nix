@@ -1,12 +1,18 @@
-{pkgs, ...} @ args: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+} @ args: let
+  inherit (pkgs) stdenv;
+  inherit (lib) mkIf;
+in {
   programs.firefox = {
     enable = true;
-    package = pkgs.wrapFirefox pkgs.firefox-devedition-unwrapped {
-      extraPolicies = {ExtensionSettings = {};};
-    };
+    package = pkgs.firefox-bin;
     profiles.default = {
       id = 0;
-      name = "dev-edition-default";
+      name = "default";
       extensions = with (import ./addons.nix args); [
         ublock-origin
         sidebery
@@ -82,15 +88,15 @@
     };
   };
   # persistence for firefox
-  home.persistence."/persist/home/lis" = {
-    directories = [
-      ".mozilla/firefox/default/storage" # fuck u, indexeddb for extension settings are vile
-    ];
-    files = [
-      ".mozilla/firefox/default/cookies.sqlite" # cookies
-      ".mozilla/firefox/default/places.sqlite" # bookmarks/history/more
-      ".mozilla/firefox/default/permissions.sqlite" # pageinfo->permissions
-      ".mozilla/firefox/default/formhistory.sqlite" # form history
-    ];
-  };
+  # home.persistence."/persist/home/lis" = {
+  #   directories = [
+  #     ".mozilla/firefox/default/storage" # fuck u, indexeddb for extension settings are vile
+  #   ];
+  #   files = [
+  #     ".mozilla/firefox/default/cookies.sqlite" # cookies
+  #     ".mozilla/firefox/default/places.sqlite" # bookmarks/history/more
+  #     ".mozilla/firefox/default/permissions.sqlite" # pageinfo->permissions
+  #     ".mozilla/firefox/default/formhistory.sqlite" # form history
+  #   ];
+  # };
 }

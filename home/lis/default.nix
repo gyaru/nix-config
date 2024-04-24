@@ -8,13 +8,13 @@
 }: {
   imports = [
     (inputs.impermanence + "/home-manager.nix")
-    ./applications/hyprland.nix
-    ./applications/vscode.nix
-    ./applications/anyrun.nix
-    ./applications/wezterm.nix
-    ./applications/firefox
-    ./applications/ags.nix
-    ./applications/spicetify.nix
+    ../applications/hyprland.nix
+    ../applications/vscode.nix
+    ../applications/anyrun.nix
+    ../applications/wezterm.nix
+    ../applications/firefox
+    ../applications/ags.nix
+    ../applications/spicetify.nix
   ];
 
   home = {
