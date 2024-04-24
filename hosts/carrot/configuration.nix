@@ -25,13 +25,6 @@
     };
   };
   services.nix-daemon.enable = true;
-  homebrew = {
-    enable = true;
-    caskArgs.no_quarantine = true;
-    global.brewfile = true;
-    masApps = {};
-    casks = ["firefox"];
-  };
   system = {
     defaults = {
       menuExtraClock.Show24Hour = true;
@@ -107,7 +100,6 @@
     fonts = with pkgs; [
       material-design-icons
       font-awesome
-      # https://github.com/NixOS/nixpkgs/blob/nixos-23.11/pkgs/data/fonts/nerdfonts/shas.nix
       (nerdfonts.override {
         fonts = [
           "NerdFontsSymbolsOnly"
@@ -116,6 +108,12 @@
           "Iosevka"
         ];
       })
+      noto-fonts
+      noto-fonts-emoji
+      noto-fonts-monochrome-emoji
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      (pkgs.callPackage ../../pkgs/mplus-fonts {})
     ];
   };
   networking.hostName = "carrot";
