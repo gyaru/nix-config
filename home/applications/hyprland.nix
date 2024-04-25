@@ -8,6 +8,17 @@
   home.packages = with pkgs; [jaq xorg.xprop];
 
   wayland.windowManager.hyprland.settings = {
+    monitor = [
+      "DP-1, 3440x1440@160, 0x0, 1, bitdepth, 8"
+      "HDMI-A-1, 2560x1440@60, 3440x450, 1, transform, 1, bitdepth, 8"
+    ];
+    exec-once = [
+      "swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill"
+      "swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill"
+      "ags"
+      #"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+      #"systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+    ];
     general = {
       border_size = 3;
       gaps_in = 10;
@@ -75,6 +86,9 @@
       "SUPER SHIFT, 4, movetoworkspacesilent, 4"
       "SUPER SHIFT, 5, movetoworkspacesilent, 5"
       "SUPER SHIFT, 6, movetoworkspacesilent, 6"
+      # misc
+      "SUPER SHIFT, S, exec, grim -g \"$(slurp)\""
+      ", XF86Calculator, exec, hyprctl switchxkblayout kbdfans-kbd67mkiirgb-v2 next"
     ];
     bindm = [
       "SUPER, mouse:272, movewindow"
@@ -97,70 +111,18 @@
       "name:5, monitor:DP-1"
       "name:6, monitor:HDMI-A-1"
     ];
+    windowrulev2 = [
+      "float, class:org.telegram.desktop, title:Media viewer"
+      "nomaxsize, title:^(Wine configuration)$"
+      "forceinput, title:^(Wine configuration)$"
+      "minsize 899 556, class:^(battle.net.exe)$, title:^(.*Installation.*)$"
+      "workspace 4, class:^(Steam)$"
+      "stayfocused, title:^()$,class:^(steam)$"
+      "workspace 6, class:^(obs)$"
+      "workspace 6, class:^(Spotify)$"
+      "workspace 5, title:^(Steam Big Picture)$"
+    ];
   };
-
-  wayland.windowManager.hyprland.extraConfig = ''
-    # displays
-    monitor = DP-1, 3440x1440@160, 1440x450, 1, bitdepth, 8
-    monitor = HDMI-A-1, 2560x1440@60, 0x0, 1, transform, 1, bitdepth, 8
-
-    # set wallpapers
-    # wallpaper ultrawide
-    exec-once = swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill
-    # wallpaper portrait
-    exec-once = swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill
-
-    # panel
-    exec-once = ags
-
-    # xdph
-    exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
-    # windows rules
-    # fix telegram media preview
-    windowrulev2 = float, class:org.telegram.desktop, title:Media viewer
-
-    # fix wine winecfg being cropped
-    windowrulev2 = nomaxsize, title:^(Wine configuration)$
-    windowrulev2 = forceinput, title:^(Wine configuration)$
-
-    # fix wine dialogs being cropped
-    windowrulev2 = minsize 899 556, class:^(battle.net.exe)$, title:^(.*Installation.*)$
-
-    # fix vscode
-    windowrulev2=fakefullscreen, class:^(code-url-handler)$
-
-    # games
-    windowrulev2 = workspace 5, class:^(wowclassic.exe)$ # wow classic
-    windowrulev2 = forceinput, class:^(wowclassic.exe)$ # wow classic
-    windowrulev2 = workspace 5, class:^(overwatch.exe)$ # overwatch
-    windowrulev2 = forceinput, class:^(overwatch.exe)$ # overwatch
-    windowrulev2 = forceinput, class:^(leagueclientux.exe)$ # league of legends
-    windowrulev2 = workspace 4, class:^(leagueclientux.exe)$ # league of legends
-    windowrulev2 = maxsize 1920 1080, class:^(leagueclientux.exe)$ # league of legends - client
-    windowrulev2 = minsize 1920 1080, class:^(leagueclientux.exe)$ # league of legends - client
-    windowrulev2 = minsize 1534 831, class:^(riotclientux.exe)$ # league of legends - riot client
-    windowrulev2 = maxsize 1534 831, class:^(riotclientux.exe)$ # league of legends - riot client
-    windowrulev2 = center, class:^(leagueclientux.exe)$ # league of legends - client
-    windowrulev2 = forceinput, class:^(league of legends.exe)$ # league of legends - game
-    windowrulev2 = fullscreen, class:^(league of legends.exe)$ # league of legends - game
-    windowrulev2 = workspace 5, class:^(league of legends.exe)$ # league of legends` - game
-    windowrulev2 = float, title:^(RuneLite)$ - runescape
-
-    # application workspaces
-    windowrulev2 = workspace 4, class:^(Steam)$
-    windowrulev2 = stayfocused, title:^()$,class:^(steam)$
-    windowrulev2 = workspace 6, class:^(obs)$
-    windowrulev2 = workspace 6, class:^(Spotify)$
-    windowrulev2 = workspace 5, title:^(Steam Big Picture)$
-
-    # region screenshot
-    bind = SUPER SHIFT, S, exec, grim -g "$(slurp)" # fix notification
-
-    # toggle keyboard layout
-    #bind=, XF86Calculator, exec, hyprctl switchxkblayout kbdfans-kbd67mkiirgb-v2 next
-  '';
 
   # enable hyprland
   wayland.windowManager.hyprland.enable = true;
