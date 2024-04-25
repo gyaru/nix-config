@@ -77,15 +77,6 @@
       fsType = "vfat";
       neededForBoot = true;
     };
-    # bind to simplify using anemic windows vfat partition
-    #"/efi/EFI/Linux" = {
-    #  device = "/boot/EFI/Linux";
-    #  options = ["bind"];
-    #};
-    #"/efi/EFI/nixos" = {
-    #  device = "/boot/EFI/nixos";
-    #  options = ["bind"];
-    #};
   };
 
   boot = {
@@ -94,7 +85,7 @@
     kernelParams = [
       "preempt=full"
       "mitigations=off"
-      "amd_pstate=passive"
+      "amd_pstate=guided"
       "amd_pstate.shared_mem=1"
       "initcall_blacklist=acpi_cpufreq_init"
       #"quiet"
@@ -265,8 +256,8 @@
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       maple-mono-NF
-      (pkgs.callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
-      (pkgs.callPackage ../../pkgs/balsamiqsans {})
+      (callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
+      (callPackage ../../pkgs/balsamiqsans {})
     ];
     fontconfig = {
       enable = lib.mkDefault true;
@@ -354,6 +345,7 @@
     enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-hyprland];
     configPackages = [pkgs.xdg-desktop-portal-hyprland];
+    config.common.default = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   # systemd

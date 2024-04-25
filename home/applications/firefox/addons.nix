@@ -61,15 +61,16 @@ in {
 
   "ublock-origin" = buildFirefoxXpiAddon {
     pname = "ublock-origin";
-    version = "1.52.2";
+    version = "1.55.0";
     addonId = "uBlock0@raymondhill.net";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4171020/ublock_origin-1.52.2.xpi";
-    sha256 = "e8ee3f9d597a6d42db9d73fe87c1d521de340755fd8bfdd69e41623edfe096d6";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4216633/ublock_origin-1.55.0.xpi";
+    sha256 = "a02ca1d32737c3437f97553e5caaead6479a66ac1f8ff3b84a06cfa6bb0c7647";
     meta = with lib; {
       homepage = "https://github.com/gorhill/uBlock#ublock-origin";
       description = "Finally, an efficient wide-spectrum content blocker. Easy on CPU and memory.";
       license = licenses.gpl3;
       mozPermissions = [
+        "alarms"
         "dns"
         "menus"
         "privacy"
@@ -90,16 +91,19 @@ in {
         "https://github.com/*"
         "https://*.github.io/*"
         "https://*.letsblock.it/*"
+        "https://github.com/uBlockOrigin/*"
+        "https://ublockorigin.github.io/*"
+        "https://*.reddit.com/r/uBlockOrigin/*"
       ];
       platforms = platforms.all;
     };
   };
   "stylus" = buildFirefoxXpiAddon {
     pname = "stylus";
-    version = "1.5.35";
+    version = "1.5.45";
     addonId = "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4160414/styl_us-1.5.35.xpi";
-    sha256 = "d415ee11fa4a4313096a268e54fd80fa93143345be16f417eb1300a6ebe26ba1";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4226958/styl_us-1.5.45.xpi";
+    sha256 = "0ea1e3bf6d415e4509730896318b4605a6d8186b11e30cede600eba0b54af3dc";
     meta = with lib; {
       homepage = "https://add0n.com/stylus.html";
       description = "Redesign your favorite websites with Stylus, an actively developed and community driven userstyles manager. Easily install custom themes from popular online repositories, or create, edit, and manage your own personalized CSS stylesheets.";
@@ -122,10 +126,10 @@ in {
   };
   "languagetool" = buildFirefoxXpiAddon {
     pname = "languagetool";
-    version = "7.1.13";
+    version = "8.3.0";
     addonId = "languagetool-webextension@languagetool.org";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4128570/languagetool-7.1.13.xpi";
-    sha256 = "e9002ae915c74ff2fe2f986e86a50b0b1617bcd852443e3d5b8e733e476c5808";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4199245/languagetool-8.3.0.xpi";
+    sha256 = "e357424e3df9dde4ba10eb9f8f3719ac4830681570557f4d51db15a462cd7667";
     meta = with lib; {
       homepage = "https://languagetool.org";
       description = "With this extension you can check text with the free style and grammar checker LanguageTool. It finds many errors that a simple spell checker cannot detect, like mixing up there/their, a/an, or repeating a word.";
@@ -389,13 +393,13 @@ in {
   };
   "sponsorblock" = buildFirefoxXpiAddon {
     pname = "sponsorblock";
-    version = "5.4.25";
+    version = "5.5.3";
     addonId = "sponsorBlocker@ajay.app";
-    url = "https://addons.mozilla.org/firefox/downloads/file/4185110/sponsorblock-5.4.25.xpi";
-    sha256 = "7bb6d42b76acca487be8e11af23db9c3df916b40e3665446d6335d3e1c7a16f4";
+    url = "https://addons.mozilla.org/firefox/downloads/file/4225820/sponsorblock-5.5.3.xpi";
+    sha256 = "6504674f064080b7d536d87dd5260067f263ef346769b9fcd9852398c0acacec";
     meta = with lib; {
       homepage = "https://sponsor.ajay.app";
-      description = "Easily skip YouTube video sponsors. When you visit a YouTube video, the extension will check the database for reported sponsors and automatically skip known sponsors. You can also report sponsors in videos.\n\nOther browsers: https://sponsor.ajay.app";
+      description = "Easily skip YouTube video sponsors. When you visit a YouTube video, the extension will check the database for reported sponsors and automatically skip known sponsors. You can also report sponsors in videos. Other browsers: https://sponsor.ajay.app";
       license = licenses.lgpl3;
       mozPermissions = [
         "storage"

@@ -150,6 +150,7 @@
 
     # application workspaces
     windowrulev2 = workspace 4, class:^(Steam)$
+    windowrulev2 = stayfocused, title:^()$,class:^(steam)$
     windowrulev2 = workspace 6, class:^(obs)$
     windowrulev2 = workspace 6, class:^(Spotify)$
     windowrulev2 = workspace 5, title:^(Steam Big Picture)$

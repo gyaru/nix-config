@@ -10,13 +10,10 @@ in {
     enable = true;
     theme = spicePkgs.themes.Ziro;
     colorScheme = "rose-pine-dawn";
-    enabledCustomApps = with spicePkgs.apps; [
-      new-releases
-      lyrics-plus
-    ];
     enabledExtensions = with spicePkgs.extensions; [
       fullAlbumDate
       powerBar
+      songStats
     ];
   };
 }

@@ -15,6 +15,7 @@
     ../applications/firefox
     ../applications/ags.nix
     ../applications/spicetify.nix
+    ../applications/fcitx5
   ];
 
   home = {
@@ -33,18 +34,20 @@
           ".gnupg"
           ".ssh"
           ".runelite"
+          ".vscode"
+          ".var"
         ]
         ++ lib.forEach ["keyrings" "direnv" "wallpapers" "TelegramDesktop"] (
           x: ".local/share/${x}"
         )
-        ++ lib.forEach ["ArmCord" "spotify"] (
+        ++ lib.forEach ["ArmCord" "spotify" "vesktop"] (
           x: ".config/${x}"
         )
-        ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index" "mozilla"] (
+        ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index"] (
           x: ".cache/${x}"
         );
       files = [
-        ".zsh_history" # zsh history
+        ".zsh_history"
       ];
       allowOther = true;
     };
@@ -65,22 +68,25 @@
       wlogout
       flatpak
       playerctl
+      xdg-utils
       imv
       socat
       runelite
       vesktop
       tealdeer
+      flatpak
     ];
 
     sessionPath = [];
 
     sessionVariables = {
-      BROWSER = "firefox";
       RUSTUP_HOME = "${config.home.homeDirectory}/.local/share/rustup";
       XCURSOR_SIZE = "16";
       XCURSOR_THEME = "Simp1e-Gruvbox-Dark";
       NIXOS_OZONE_WL = "1";
-      MOZ_USE_XINPUT2 = "1";
+      QT_QPA_PLATFORM = "wayland";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      SDL_VIDEODRIVER = "wayland";
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
@@ -88,30 +94,19 @@
     };
   };
 
-  # home-manager
   programs.home-manager.enable = true;
-
-  # git
   programs.git.enable = true;
-
-  # starship
   programs.starship = {
     enable = true;
     settings = {
       add_newline = false;
     };
   };
-
-  # direnv
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
-
-  # fzf
   programs.fzf.enable = true;
-
-  # zsh
   programs.zsh = {
     enable = true;
     initExtra = "";
@@ -130,8 +125,8 @@
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
-    style.name = "adwaita-dark";
+    platformTheme = "gtk3";
+    style.name = "adwaita";
     style.package = pkgs.adwaita-qt;
   };
 
@@ -153,15 +148,6 @@
       pictures = "${config.home.homeDirectory}/pictures";
       videos = "${config.home.homeDirectory}/videos";
     };
-  };
-
-  i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-      fcitx5-chinese-addons
-    ];
   };
 
   systemd.user.startServices = "sd-switch";
