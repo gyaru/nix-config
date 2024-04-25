@@ -94,7 +94,13 @@ in {
   # persistence for firefox
   home.persistence."/persist/home/lis" = {
     directories = [
-      ".mozilla"
+      ".mozilla/firefox/default/storage" # fuck u, indexeddb for extension settings are vile
+    ];
+    files = [
+      ".mozilla/firefox/default/cookies.sqlite" # cookies
+      ".mozilla/firefox/default/places.sqlite" # bookmarks/history/more
+      ".mozilla/firefox/default/permissions.sqlite" # pageinfo->permissions
+      ".mozilla/firefox/default/formhistory.sqlite" # form history
     ];
   };
 }
