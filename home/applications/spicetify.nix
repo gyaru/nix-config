@@ -10,10 +10,5 @@ in {
     enable = true;
     theme = spicePkgs.themes.Ziro;
     colorScheme = "rose-pine-dawn";
-    enabledExtensions = with spicePkgs.extensions; [
-      fullAlbumDate
-      powerBar
-      songStats
-    ];
   };
 }
