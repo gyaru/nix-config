@@ -8,9 +8,9 @@
     enable = true;
 
     config = {
-      plugins = with inputs.anyrun.packages; [
-        inputs.anyrun.packages.${pkgs.system}.applications
-        inputs.anyrun.packages.${pkgs.system}.translate
+      plugins = with inputs.anyrun.packages.${pkgs.system}; [
+        applications
+        translate
       ];
       hidePluginInfo = true;
       layer = "overlay";
@@ -37,11 +37,11 @@
 
       #match:selected {
         color: #FBF1E5;
-        background: #931500;
+        background: #d7827e;
       }
 
       #list {
-        border-top: 3px solid #931500;
+        border-top: 3px solid #d7827e;
       }
 
       #entry {
@@ -54,8 +54,8 @@
       }
 
       box#main {
-        background: #E9D4B9;
-        border: 3px solid #931500;
+        background: #faf4ed;
+        border: 3px solid #d7827e;
       }
     '';
   };

@@ -4,10 +4,9 @@
   ...
 }: {
   imports = [
-    ../applications/firefox
-    ../applications/wezterm.nix
-    ../applications/vscode.nix
-    ../applications/wezterm.nix
+    ./applications/firefox
+    ./applications/kitty.nix
+    ./applications/vscode.nix
   ];
 
   home = {

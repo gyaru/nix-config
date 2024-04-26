@@ -7,13 +7,15 @@ import App from 'resource:///com/github/Aylur/ags/app.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import { exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
+// FIXME: Gjs-Console-WARNING **: 01:57:00.568: Error: Using "connections" and "binds" props are DEPRECATED
+
 const Workspaces = () => Widget.Box({
     className: 'workspaces',
     connections: [[Hyprland.active.workspace, self => {
-        // TODO: fetch amount of workspaces for main monitor instead hardcode 5
+        // TODO: fetch amount of workspaces for main monitor instead hardcode 5 
         const arr = Array.from({ length: 5 }, (_, i) => i + 1);
         self.children = arr.map(i => Widget.Box({
-            child: Widget.Label(``),
+            child: Widget.Label(``),
             className: Hyprland.active.workspace.id == i ? 'focused' : '',
         }));
     }]],
@@ -33,7 +35,7 @@ const Media = () => Widget.Box({
         connections: [[Mpris, self => {
             const mpris = Mpris.getPlayer('');
             if (mpris)
-                self.label = ` ${mpris.trackArtists.join(', ')} - ${mpris.trackTitle}`;
+                self.label = `${mpris.trackArtists.join(', ')} - ${mpris.trackTitle}`;
             else
                 self.label = '';
         }]],
@@ -43,19 +45,18 @@ const Media = () => Widget.Box({
 const Volume = () => Widget.Button({
     className: 'volume',
     onClicked: () => Audio.speaker.isMuted = !Audio.speaker.isMuted,
-    child: Widget.Icon({
+    child: Widget.Label({
         connections: [[Audio, self => {
             if (!Audio.speaker)
                 return;
             const vol = Audio.speaker.volume * 100;
-            const icon = [
-                [101, 'overamplified'],
-                [67, 'high'],
-                [34, 'medium'],
-                [1, 'low'],
-                [0, 'muted'],
+            const label = [
+                [67, ''],
+                [34, ''],
+                [1, ''],
+                [0, ''],
             ].find(([threshold]) => threshold <= vol)[1];
-            self.icon = `audio-volume-${icon}-symbolic`;
+            self.label = `${label}`;
             self.tooltipText = `Volume ${Math.floor(vol)}%`;
         }, 'speaker-changed']],
     }),
@@ -74,6 +75,7 @@ const SysTray = () => Widget.Box({
 });
 
 const Left = () => Widget.Box({
+    hpack: 'start',
     children: [
         Media(),
     ],
@@ -89,8 +91,8 @@ const Right = () => Widget.Box({
     hpack: 'end',
     children: [
         Volume(),
-        Clock(),
         SysTray(),
+        Clock(),
     ],
 });
 

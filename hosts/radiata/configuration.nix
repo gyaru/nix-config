@@ -271,6 +271,7 @@
       maple-mono-NF
       (callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
       (callPackage ../../pkgs/balsamiqsans {})
+      (callPackage ../../pkgs/lucide-icons {})
     ];
     fontconfig = {
       enable = lib.mkDefault true;

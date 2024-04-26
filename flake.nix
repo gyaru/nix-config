@@ -67,7 +67,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.lis = import ./home/lis;
+            home-manager.users.lis = import ./home/lis.nix;
           }
         ];
       };
@@ -83,7 +83,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.bun = import ./home/bun;
+            home-manager.users.bun = import ./home/bun.nix;
           }
         ];
       };

@@ -7,12 +7,11 @@
 }
 
 .bar {
-    background-color: #EEDCC5;
-    color: #931500;
-    font-family: 'BalsamiqSans', 'Maple Mono NF';
-    font-size: 16px;
-    padding: 5px;
-    border-bottom: 3px solid #931500;
+    background-color: #faf4ed;
+    color: #d7827e;
+    font-family: 'BalsamiqSans', 'lucide';
+    font-size: 25px;
+    border-bottom: 5px solid #d7827e;
 }
 
 label {
@@ -20,28 +19,25 @@ label {
 }
 
 .media {
-    padding-left: 8px;
+    margin-left: 5px;
 }
 
 .workspaces box {
-    background-color: #bd7062;
-    border-bottom: 3px solid #931500;
+    color: #d7827e;
     margin-left: 5px;
     margin-right: 5px;
-    min-width: 15px;
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
 .workspaces box.focused {
-    background-color: #931500;
+    color: #ea9d34;
 }
 
 .volume {
-    color: #931500;
-    background: unset;
-    border: unset;
-    box-shadow: unset;
-    padding: unset;
-    outline: unset;
+    color: #d7827e;
+    font-size: 20px;
+    margin-right: 5px;
 }
 
 .notification image {
@@ -49,23 +45,13 @@ label {
     margin-left: 1em;
 }
 
-.battery progressbar {
-    margin: 0 6px;
-}
-
 .clock {
-    min-width: 120px;
+    min-width: 50px;
+    font-size: 20px;
+    margin-right: 5px;
 }
 
 progress,
 highlight {
     background-color: aqua;
-}
-
-.tray button {
-    background: unset;
-    border: unset;
-    box-shadow: unset;
-    padding: unset;
-    outline: unset;
 }

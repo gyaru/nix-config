@@ -1,27 +1,58 @@
 {
   inputs,
-  outputs,
   lib,
   config,
   pkgs,
   ...
-}: {
+}: let
+  cursorTheme = {
+    name = "BreezeX-RosePineDawn-Linux";
+    size = 24;
+    package = pkgs.rose-pine-cursor;
+  };
+in {
   imports = [
     (inputs.impermanence + "/home-manager.nix")
-    ../applications/hyprland.nix
-    ../applications/vscode.nix
-    ../applications/anyrun.nix
-    ../applications/wezterm.nix
-    ../applications/firefox
-    ../applications/ags.nix
-    ../applications/spicetify.nix
-    ../applications/fcitx5
+    ./applications/hyprland.nix
+    ./applications/vscode.nix
+    ./applications/anyrun.nix
+    ./applications/firefox
+    ./applications/ags
+    ./applications/spicetify.nix
+    ./applications/fcitx5
+    ./applications/kitty.nix
   ];
+
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk3";
+    style.name = "adwaita";
+    style.package = pkgs.adwaita-qt;
+  };
+
+  gtk = {
+    enable = true;
+    theme.name = "adw-gtk3";
+    theme.package = pkgs.adw-gtk3;
+    cursorTheme.package = cursorTheme.package;
+    cursorTheme.name = cursorTheme.name;
+    cursorTheme.size = cursorTheme.size;
+  };
+
+  xdg = {
+    userDirs = {
+      enable = true;
+      documents = "${config.home.homeDirectory}/documents";
+      download = "${config.home.homeDirectory}/downloads";
+      music = "${config.home.homeDirectory}/music";
+      pictures = "${config.home.homeDirectory}/pictures";
+      videos = "${config.home.homeDirectory}/videos";
+    };
+  };
 
   home = {
     username = "lis";
     homeDirectory = "/home/lis";
-
     # impermanence is cool or something
     persistence."/persist/home/lis" = {
       directories =
@@ -81,8 +112,8 @@
 
     sessionVariables = {
       RUSTUP_HOME = "${config.home.homeDirectory}/.local/share/rustup";
-      XCURSOR_SIZE = "16";
-      XCURSOR_THEME = "Simp1e-Gruvbox-Dark";
+      XCURSOR_SIZE = cursorTheme.size;
+      XCURSOR_THEME = cursorTheme.name;
       NIXOS_OZONE_WL = "1";
       QT_QPA_PLATFORM = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
@@ -121,35 +152,12 @@
         };
       }
     ];
+    envExtra = ''
+      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+        dbus-run-session Hyprland
+      fi
+    '';
   };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-    style.name = "adwaita";
-    style.package = pkgs.adwaita-qt;
-  };
-
-  gtk = {
-    enable = true;
-    theme.name = "adw-gtk3";
-    theme.package = pkgs.adw-gtk3;
-    cursorTheme.package = pkgs.simp1e-cursors;
-    cursorTheme.name = "Simp1e-Gruvbox-Dark"; # TODO: ref previous
-    cursorTheme.size = 16;
-  };
-
-  xdg = {
-    userDirs = {
-      enable = true;
-      documents = "${config.home.homeDirectory}/documents";
-      download = "${config.home.homeDirectory}/downloads";
-      music = "${config.home.homeDirectory}/music";
-      pictures = "${config.home.homeDirectory}/pictures";
-      videos = "${config.home.homeDirectory}/videos";
-    };
-  };
-
   systemd.user.startServices = "sd-switch";
 
   home.stateVersion = "23.11";

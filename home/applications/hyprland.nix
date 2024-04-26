@@ -1,6 +1,5 @@
 {
   inputs,
-  lib,
   pkgs,
   ...
 }: {
@@ -10,21 +9,19 @@
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "DP-1, 3440x1440@160, 0x0, 1, bitdepth, 8"
-      "HDMI-A-1, 2560x1440@60, 3440x450, 1, transform, 1, bitdepth, 8"
+      "HDMI-A-1, 2560x1440@60, 3440x0, 1, transform, 1, bitdepth, 8"
     ];
     exec-once = [
       "swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill"
       "swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill"
       "ags"
-      #"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-      #"systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     ];
     general = {
-      border_size = 3;
+      border_size = 5;
       gaps_in = 10;
       gaps_out = 10;
-      "col.active_border" = "0xFF931500";
-      "col.inactive_border" = "0xFF931500";
+      "col.active_border" = "0xFFd7827e";
+      "col.inactive_border" = "0xFFea9d34";
       layout = "dwindle";
     };
     decoration = {
@@ -37,6 +34,7 @@
       enabled = false;
     };
     input = {
+      kb_layout = "us,se";
       follow_mouse = 1;
       force_no_accel = true;
       repeat_delay = 250;
@@ -52,7 +50,7 @@
       no_gaps_when_only = false;
     };
     bind = [
-      "SUPER, Return, exec, wezterm"
+      "SUPER, Return, exec, kitty"
       "SUPER, Space, exec, anyrun"
       "SUPER, O, exec, firefox"
       "SUPER, C, exec, hyprpicker -a"
@@ -87,7 +85,7 @@
       "SUPER SHIFT, 5, movetoworkspacesilent, 5"
       "SUPER SHIFT, 6, movetoworkspacesilent, 6"
       # misc
-      "SUPER SHIFT, S, exec, grim -g \"$(slurp)\""
+      "SUPER SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy"
       ", XF86Calculator, exec, hyprctl switchxkblayout kbdfans-kbd67mkiirgb-v2 next"
     ];
     bindm = [

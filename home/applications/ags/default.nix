@@ -6,7 +6,7 @@
   imports = [inputs.ags.homeManagerModules.default];
   programs.ags = {
     enable = true;
-    configDir = ./ags;
+    configDir = builtins.toString ./.;
     extraPackages = [pkgs.libsoup_3];
   };
 }
