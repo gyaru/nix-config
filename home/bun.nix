@@ -7,6 +7,7 @@
     ./applications/firefox
     ./applications/kitty.nix
     ./applications/vscode.nix
+    ./applications/aerospace.nix
   ];
 
   home = {

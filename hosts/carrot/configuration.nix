@@ -6,6 +6,9 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./homebrew.nix
+  ];
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
@@ -104,8 +107,6 @@
         fonts = [
           "NerdFontsSymbolsOnly"
           "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
         ];
       })
       noto-fonts
@@ -113,7 +114,8 @@
       noto-fonts-monochrome-emoji
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      (pkgs.callPackage ../../pkgs/mplus-fonts {})
+      (callPackage ../../pkgs/mplus-fonts {})
+      (callPackage ../../pkgs/lucide-icons {})
     ];
   };
   networking.hostName = "carrot";
