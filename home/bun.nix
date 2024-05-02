@@ -37,7 +37,6 @@
     which
     tree
     gnused
-    nixfmt
     nil
     gnutar
     gawk

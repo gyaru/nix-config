@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  options,
   ...
 } @ args: let
   inherit (pkgs) stdenv;
@@ -85,7 +86,7 @@ in
           # hide tabs toolbar for sidebery etc.
           userChrome =
             if stdenv.isDarwin
-            then builtins.readFile "./darwin.css"
+            then builtins.readFile ./darwin.css
             else ''
               #TabsToolbar {
               display: none;
@@ -97,7 +98,7 @@ in
         };
       };
     }
-    (lib.mkIf (!stdenv.isDarwin) {
+    (lib.optionalAttrs (options ? home.persistence) {
       # persistence for firefox
       home.persistence."/persist/home/lis" = {
         directories = [
