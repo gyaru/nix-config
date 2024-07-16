@@ -4,9 +4,9 @@
 
 # lis' nix config
 
-```nixos-rebuild switch --flake .#radiata --recreate-lock-file --show-trace |& nom```
+```nixos-rebuild switch --flake .#radiata --recreate-lock-file --show-trace --log-format internal-json -v |& nom --json```
 
-```darwin-rebuild switch --flake .#carrot --recreate-lock-file --show-trace |& nom```
+```darwin-rebuild switch --flake .#carrot --recreate-lock-file --show-trace --log-format internal-json -v |& nom --json```
 
 
 #### quirks to fix

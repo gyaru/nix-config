@@ -18,7 +18,6 @@ in {
     ./applications/anyrun.nix
     ./applications/firefox
     ./applications/ags
-    ./applications/spicetify.nix
     ./applications/fcitx5
     ./applications/kitty.nix
   ];

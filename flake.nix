@@ -14,9 +14,8 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
     #flake-utils.url = "github:numtide/flake-utils";
     #agenix.url = "github:ryantm/agenix";
     #agenix.inputs.nixpkgs.follows = "nixpkgs";
