@@ -2,9 +2,9 @@
   description = "lis' nix flakes";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    nixpkgs-nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
@@ -16,11 +16,6 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    #flake-utils.url = "github:numtide/flake-utils";
-    #agenix.url = "github:ryantm/agenix";
-    #agenix.inputs.nixpkgs.follows = "nixpkgs";
-    #agenix-rekey.url = "github:oddlama/agenix-rekey";
-    #agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     ags.url = "github:Aylur/ags";
@@ -31,9 +26,8 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-stable,
     darwin,
-    #agenix,
-    #agenix-rekey,
     home-manager,
     impermanence,
     ...
@@ -59,12 +53,11 @@
         modules = [
           ./hosts/radiata/configuration.nix
           inputs.lanzaboote.nixosModules.lanzaboote
-          #agenix.nixosModules.default
-          #agenix-rekey.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = {inherit inputs;};
             home-manager.users.lis = import ./home/lis.nix;
           }

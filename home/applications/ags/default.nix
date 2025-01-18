@@ -7,6 +7,6 @@
   programs.ags = {
     enable = true;
     configDir = builtins.toString ./.;
-    extraPackages = [pkgs.libsoup_3];
+    extraPackages = [pkgs.fzf];
   };
 }

@@ -14,7 +14,7 @@
     exec-once = [
       "swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill"
       "swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill"
-      "ags"
+      "wl-paste -t text -w xclip -selection clipboard" # TODO: move this outside hyprland
     ];
     general = {
       border_size = 5;
@@ -25,7 +25,9 @@
       layout = "dwindle";
     };
     decoration = {
-      drop_shadow = false;
+      shadow = {
+        enabled = false;
+      };
       blur = {
         enabled = false;
       };
@@ -47,7 +49,6 @@
     dwindle = {
       pseudotile = false;
       preserve_split = "yes";
-      no_gaps_when_only = false;
     };
     bind = [
       "SUPER, Return, exec, kitty"
@@ -112,7 +113,6 @@
     windowrulev2 = [
       "float, class:org.telegram.desktop, title:Media viewer"
       "nomaxsize, title:^(Wine configuration)$"
-      "forceinput, title:^(Wine configuration)$"
       "minsize 899 556, class:^(battle.net.exe)$, title:^(.*Installation.*)$"
       "workspace 4, class:^(Steam)$"
       "stayfocused, title:^()$,class:^(steam)$"

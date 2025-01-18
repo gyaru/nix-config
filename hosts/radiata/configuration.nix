@@ -142,8 +142,8 @@
 
     bootspec.enable = true;
     initrd = {
-      kernelModules = [];
       availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+      kernelModules = ["amdgpu" "nct6775"];
       systemd.enable = true;
       supportedFilesystems = ["btrfs"];
       systemd.services.rollback = {
@@ -209,13 +209,9 @@
   hardware = {
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
-    opengl = {
+    graphics = {
       enable = true;
-      extraPackages = with pkgs; [
-        amdvlk
-        rocmPackages.clr.icd
-        rocmPackages.clr
-      ];
+      enable32Bit = true;
     };
   };
 
@@ -254,6 +250,8 @@
         "/var/lib/bluetooth"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
+        "/var/lib/flatpak"
+        "/etc/coolercontrol" # fancontrol
       ];
     };
   };
@@ -283,20 +281,20 @@
   # locales
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    supportedLocales = ["en_US.UTF-8/UTF-8"];
+    supportedLocales = ["en_US.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8"];
     extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
       LC_COLLATE = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
-      LC_IDENTIFICATION = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_DK.UTF-8";
+      LC_MEASUREMENT = "en_DK.UTF-8";
       LC_MESSAGES = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
+      LC_MONETARY = "en_DK.UTF-8";
       LC_NAME = "en_US.UTF-8";
       LC_NUMERIC = "en_US.UTF-8";
-      LC_PAPER = "en_US.UTF-8";
-      LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
+      LC_PAPER = "en_DK.UTF-8";
+      LC_TELEPHONE = "en_DK.UTF-8";
+      LC_TIME = "en_GB.UTF-8";
     };
   };
 
@@ -309,6 +307,7 @@
     dconf.enable = true;
     zsh.enable = true;
     fuse.userAllowOther = true; # impermanence
+    coolercontrol.enable = true; # fancontrol
   };
 
   # security
@@ -319,15 +318,6 @@
 
   # services
   services = {
-    chrony = {
-      enable = true;
-      servers = [
-        "0.nixos.pool.ntp.org"
-        "1.nixos.pool.ntp.org"
-        "2.nixos.pool.ntp.org"
-        "3.nixos.pool.ntp.org"
-      ];
-    };
     journald.extraConfig = lib.mkForce "";
     pipewire = {
       enable = true;
@@ -355,7 +345,7 @@
   };
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
     configPackages = [pkgs.xdg-desktop-portal-hyprland];
     config.common.default = [pkgs.xdg-desktop-portal-hyprland];
   };
@@ -373,9 +363,7 @@
   };
 
   # time
-  time = {
-    timeZone = "Europe/Stockholm";
-  };
+  time.timeZone = "Europe/Stockholm";
 
   system.stateVersion = "23.11";
 }

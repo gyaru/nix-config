@@ -18,7 +18,6 @@ in {
     ./applications/anyrun.nix
     ./applications/firefox
     ./applications/ags
-    ./applications/fcitx5
     ./applications/kitty.nix
   ];
 
@@ -67,13 +66,13 @@ in {
           ".vscode"
           ".var"
         ]
-        ++ lib.forEach ["keyrings" "direnv" "wallpapers" "TelegramDesktop"] (
+        ++ lib.forEach ["keyrings" "direnv" "wallpapers" "TelegramDesktop" "flatpak"] (
           x: ".local/share/${x}"
         )
         ++ lib.forEach ["ArmCord" "spotify" "vesktop"] (
           x: ".config/${x}"
         )
-        ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index"] (
+        ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index" "flatpak"] (
           x: ".cache/${x}"
         );
       files = [
@@ -83,28 +82,30 @@ in {
     };
 
     packages = with pkgs; [
-      telegram-desktop
-      bitwarden
-      grim
-      slurp
       btop
-      swaybg
-      obs-studio
-      mpv
       eza
-      nil
-      wl-clipboard
+      flatpak
+      ghostty
+      grim
       hyprpicker
-      wlogout
-      flatpak
-      playerctl
-      xdg-utils
+      hyprprop
       imv
-      socat
+      mpv
+      nil
+      obs-studio
+      playerctl
       runelite
-      vesktop
+      slurp
+      socat
+      swaybg
       tealdeer
-      flatpak
+      telegram-desktop
+      vesktop
+      waybar
+      wl-clipboard
+      wlogout
+      xclip
+      xdg-utils
     ];
 
     sessionPath = [];
@@ -151,11 +152,11 @@ in {
         };
       }
     ];
-    envExtra = ''
-      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-        dbus-run-session Hyprland
-      fi
-    '';
+    #    envExtra = ''
+    #      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+    #        dbus-run-session Hyprland
+    #      fi
+    #    '';
   };
   systemd.user.startServices = "sd-switch";
 

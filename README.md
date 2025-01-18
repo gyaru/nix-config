@@ -12,3 +12,6 @@
 #### quirks to fix
 * ##### do we really need brew? (not yet lol)
 * ##### [/home/user can't be deleted and then recreated?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/hosts/radiata/configuration.nix#L122)
+
+
+sudo fd --one-file-system --base-directory / --type f --hidden --exclude "{tmp,etc/passwd}"
