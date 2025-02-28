@@ -3,9 +3,7 @@ import { Variable, GLib, bind } from "astal"
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Hyprland from "gi://AstalHyprland"
 import Mpris from "gi://AstalMpris"
-import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
-import Network from "gi://AstalNetwork"
 import Tray from "gi://AstalTray"
 
 function SysTray() {
@@ -24,22 +22,6 @@ function SysTray() {
     </box>
 }
 
-function Wifi() {
-    const network = Network.get_default()
-    const wifi = bind(network, "wifi")
-
-    return <box visible={wifi.as(Boolean)}>
-        {wifi.as(wifi => wifi && (
-            <icon
-                tooltipText={bind(wifi, "ssid").as(String)}
-                className="Wifi"
-                icon={bind(wifi, "iconName")}
-            />
-        ))}
-    </box>
-
-}
-
 function AudioSlider() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
 
@@ -50,18 +32,6 @@ function AudioSlider() {
             onDragged={({ value }) => speaker.volume = value}
             value={bind(speaker, "volume")}
         />
-    </box>
-}
-
-function BatteryLevel() {
-    const bat = Battery.get_default()
-
-    return <box className="Battery"
-        visible={bind(bat, "isPresent")}>
-        <icon icon={bind(bat, "batteryIconName")} />
-        <label label={bind(bat, "percentage").as(p =>
-            `${Math.floor(p * 100)} %`
-        )} />
     </box>
 }
 
@@ -94,31 +64,19 @@ function Workspaces() {
     const hypr = Hyprland.get_default()
 
     return <box className="Workspaces">
-        {bind(hypr, "workspaces").as(wss => wss
-            .filter(ws => !(ws.id >= -99 && ws.id <= -2)) // filter out special workspaces
-            .sort((a, b) => a.id - b.id)
-            .map(ws => (
-                <button
-                    className={bind(hypr, "focusedWorkspace").as(fw =>
-                        ws === fw ? "focused" : "")}
-                    onClicked={() => ws.focus()}>
-                    {ws.id}
-                </button>
-            ))
-        )}
-    </box>
-}
-
-function FocusedClient() {
-    const hypr = Hyprland.get_default()
-    const focused = bind(hypr, "focusedClient")
-
-    return <box
-        className="Focused"
-        visible={focused.as(Boolean)}>
-        {focused.as(client => (
-            client && <label label={bind(client, "title").as(String)} />
-        ))}
+        {bind(hypr, "workspaces").as(wss => {
+            console.log('Workspace IDs:', wss.map(ws => ws.id))
+            return wss
+                .sort((a, b) => a.id - b.id)
+                .map(ws => (
+                    <button
+                        className={bind(hypr, "focusedWorkspace").as(fw =>
+                            ws === fw ? "focused" : "")}
+                        onClicked={() => ws.focus()}>
+                        {ws.id}
+                    </button>
+                ))
+        })}
     </box>
 }
 
@@ -143,17 +101,14 @@ export default function Bar(monitor: Gdk.Monitor) {
         anchor={TOP | LEFT | RIGHT}>
         <centerbox>
             <box hexpand halign={Gtk.Align.START}>
-                <Workspaces />
-                <FocusedClient />
+                <Media />
             </box>
             <box>
-                <Media />
+                <Workspaces />
             </box>
             <box hexpand halign={Gtk.Align.END} >
                 <SysTray />
-                <Wifi />
                 <AudioSlider />
-                <BatteryLevel />
                 <Time />
             </box>
         </centerbox>

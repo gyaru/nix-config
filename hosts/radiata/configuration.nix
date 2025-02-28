@@ -31,6 +31,8 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      max-jobs = "auto";
+      cores = 0;
       substituters = [
         "https://cache.nixos.org?priority=10"
         "https://anyrun.cachix.org"
@@ -38,12 +40,18 @@
         "https://nix-community.cachix.org"
         "https://nix-gaming.cachix.org"
       ];
+      system-features = ["big-parallel" "kvm" "nixos-test"];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
   };
 
@@ -56,6 +64,11 @@
       "8.8.8.8"
       "8.8.4.4"
     ]; # cloudflare, google as backup
+    firewall = {
+      enable = true;
+      allowPing = false;
+      logReversePathDrops = true;
+    };
   };
 
   fileSystems = {
@@ -116,6 +129,7 @@
       "vm.dirty_ratio" = 60;
       "vm.dirty_background_ratio" = 2;
       "vm.swappiness" = 10;
+      "vm.max_map_count" = 2147483642;
       "vm.vfs_cache_pressure" = 75;
       "net.core.netdev_max_backlog" = 16384;
       "net.core.somaxconn" = 8192;
@@ -234,7 +248,6 @@
       alejandra
       sbctl
       ntfs3g
-      comma
       atool
       unzip
       p7zip
@@ -265,15 +278,24 @@
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       maple-mono-NF
-      (callPackage ../../pkgs/mplus-fonts {}) # TODO: do I really need to call it like this?
-      (callPackage ../../pkgs/balsamiqsans {})
-      (callPackage ../../pkgs/lucide-icons {})
+      mplus-fonts
+      balsamiqsans
+      lucide-icons
     ];
     fontconfig = {
       enable = lib.mkDefault true;
       defaultFonts = {
         monospace = ["M PLUS 1 Code"];
         emoji = ["Noto Color Emoji"];
+      };
+      antialias = true;
+      hinting = {
+        enable = true;
+        style = "full";
+      };
+      subpixel = {
+        rgba = "rgb";
+        lcdfilter = "default";
       };
     };
   };
@@ -308,12 +330,14 @@
     zsh.enable = true;
     fuse.userAllowOther = true; # impermanence
     coolercontrol.enable = true; # fancontrol
+    nix-index-database.comma.enable = true;
   };
 
   # security
   security = {
     sudo.wheelNeedsPassword = false;
     polkit.enable = true;
+    rtkit.enable = true;
   };
 
   # services

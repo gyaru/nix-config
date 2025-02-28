@@ -15,6 +15,7 @@
       "swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill"
       "swaybg -o HDMI-A-1 -i ~/.local/share/wallpapers/bg2.jpg -m fill"
       "wl-paste -t text -w xclip -selection clipboard" # TODO: move this outside hyprland
+      "ags run"
     ];
     general = {
       border_size = 5;

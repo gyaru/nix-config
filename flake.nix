@@ -18,7 +18,7 @@
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    ags.url = "github:Aylur/ags";
+    ags.url = "github:aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
   };
@@ -53,6 +53,7 @@
         modules = [
           ./hosts/radiata/configuration.nix
           inputs.lanzaboote.nixosModules.lanzaboote
+          inputs.nix-index-database.nixosModules.nix-index
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

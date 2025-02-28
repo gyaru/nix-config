@@ -62,14 +62,13 @@ in {
           "videos"
           ".gnupg"
           ".ssh"
-          ".runelite"
           ".vscode"
           ".var"
         ]
         ++ lib.forEach ["keyrings" "direnv" "wallpapers" "TelegramDesktop" "flatpak"] (
           x: ".local/share/${x}"
         )
-        ++ lib.forEach ["ArmCord" "spotify" "vesktop"] (
+        ++ lib.forEach ["spotify" "vesktop"] (
           x: ".config/${x}"
         )
         ++ lib.forEach ["tealdeer" "nix" "starship" "nix-index" "flatpak"] (
@@ -106,6 +105,8 @@ in {
       wlogout
       xclip
       xdg-utils
+      code-cursor
+      strace
     ];
 
     sessionPath = [];
