@@ -107,7 +107,7 @@
 
   boot = {
     #consoleLogLevel = 0;
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
     kernelParams = [
       "preempt=full"
       "mitigations=off"
@@ -277,7 +277,7 @@
       noto-fonts-monochrome-emoji
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      maple-mono-NF
+      maple-mono.NF
       mplus-fonts
       balsamiqsans
       lucide-icons

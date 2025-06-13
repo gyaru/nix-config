@@ -6,14 +6,15 @@
 }: {
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      mvllow.rose-pine
-      eamodio.gitlens
-      pkief.material-product-icons
-      pkief.material-icon-theme
-      jnoortheen.nix-ide
-    ];
-    userSettings = {
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        mvllow.rose-pine
+        eamodio.gitlens
+        pkief.material-product-icons
+        pkief.material-icon-theme
+        jnoortheen.nix-ide
+      ];
+      userSettings = {
       "editor.fontSize" = 16;
       "editor.fontLigatures" = true;
       "editor.formatOnSave" = true;
@@ -34,6 +35,7 @@
             "command" = ["alejandra"];
           };
         };
+      };
       };
     };
   };
