@@ -21,6 +21,10 @@
     ags.url = "github:aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
@@ -47,10 +51,7 @@
           settings = {
             hooks = {
               alejandra.enable = true;
-              deadnix = {
-                enable = true;
-                excludes = ["home/applications/firefox/addons.nix"];
-              };
+              deadnix.enable = true;
               statix.enable = true;
               nil.enable = true;
             };

@@ -5,7 +5,6 @@
 }: {
   imports = [inputs.hyprland.homeManagerModules.default];
   home.packages = with pkgs; [jaq xorg.xprop];
-
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "DP-1, 3440x1440@160, 0x0, 1, bitdepth, 8"

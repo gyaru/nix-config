@@ -18,13 +18,19 @@
     outputs.nixosModules.security
   ];
 
-  modules.impermanence = {
-    enable = true;
-    btrfsRootUuid = "caf259ee-b2be-4cf8-b41a-752a09d344a7";
-    persistentDirectories = [
-      "/var/lib/flatpak"
-      "/etc/coolercontrol"
-    ];
+  modules = {
+    wayland = {
+      enable = true;
+      compositor = "hyprland";
+    };
+    impermanence = {
+      enable = true;
+      btrfsRootUuid = "caf259ee-b2be-4cf8-b41a-752a09d344a7";
+      persistentDirectories = [
+        "/var/lib/flatpak"
+        "/etc/coolercontrol"
+      ];
+    };
   };
 
   modules.audio = {
