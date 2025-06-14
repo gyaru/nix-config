@@ -91,6 +91,7 @@ in {
       hyprpicker
       hyprprop
       imv
+      kooha
       mpv
       nil
       obs-studio

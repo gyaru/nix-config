@@ -79,7 +79,6 @@
 
             shellHook = ''
               ${config.pre-commit.installationScript}
-              export FLAKE_DIR="${inputs.self}"
               echo "lis' nix-config environment"
             '';
           };

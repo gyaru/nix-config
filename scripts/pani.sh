@@ -8,15 +8,14 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-if [[ -z "${FLAKE_DIR:-}" ]]; then
-    if [[ -f "flake.nix" ]]; then
-        FLAKE_DIR="$(pwd)"
-    elif command -v git &> /dev/null && git rev-parse --show-toplevel &> /dev/null; then
-        FLAKE_DIR="$(git rev-parse --show-toplevel)"
-    else
-        # Fallback to home directory nix-config
-        FLAKE_DIR="$HOME/projects/nix-config"
-    fi
+# Always try to find the actual flake directory, not the store path
+if [[ -f "flake.nix" ]]; then
+    FLAKE_DIR="$(pwd)"
+elif command -v git &> /dev/null && git rev-parse --show-toplevel &> /dev/null; then
+    FLAKE_DIR="$(git rev-parse --show-toplevel)"
+else
+    # Fallback to home directory nix-config
+    FLAKE_DIR="$HOME/projects/nix-config"
 fi
 
 print_info() {
@@ -182,13 +181,13 @@ pani() {
     
     case "$cmd" in
         switch|boot|test|build|dry-build)
-            if sudo nixos-rebuild "$cmd" --flake ".#$host" --log-format internal-json |& nom --json; then
+            if sudo nixos-rebuild "$cmd" --flake "${FLAKE_DIR}#$host" --log-format internal-json |& nom --json; then
                 print_success "Operation completed successfully!"
                 
                 # If we're in a devshell and just did a switch, reload it
                 if [[ "$cmd" == "switch" ]] && [[ -n "${IN_NIX_SHELL:-}" ]]; then
                     print_info "Reloading development shell..."
-                    exec nix develop "$FLAKE_DIR" -c "$SHELL"
+                    exec nix develop "${FLAKE_DIR}#" -c "$SHELL"
                 fi
             else
                 exit_code=$?
