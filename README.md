@@ -8,5 +8,5 @@
 
 ```darwin-rebuild switch --flake .#carrot --show-trace --log-format internal-json -v |& nom --json```
 
-# check filesystem diff
-sudo fd --one-file-system --base-directory / --type f --hidden --exclude "{tmp,etc/passwd}"
+# dev shell with useful utilities
+```nix develop```
