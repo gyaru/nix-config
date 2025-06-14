@@ -63,6 +63,7 @@
           mkScript = name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name}.sh);
         in
           pkgs.mkShell {
+            name = "gyaru/nix-config";
             packages = with pkgs;
               [
                 alejandra
