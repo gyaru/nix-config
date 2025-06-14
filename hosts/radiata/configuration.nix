@@ -27,6 +27,18 @@
     ];
   };
 
+  modules.audio = {
+    enable = true;
+    defaultSink = "alsa_output.usb-Schiit_Audio_Schiit_Magni_Unity-00.analog-stereo";
+    defaultSource = "alsa_input.usb-Elgato_Systems_Elgato_Wave_3_BS41M1A00911-00.mono-fallback";
+    sampleRate = 48000;
+    quantumSize = 1024;
+    extraConfig = {
+      "resample.quality" = 10;
+      "pulse.min.quantum" = 1024;
+    };
+  };
+
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
     overlays = [
