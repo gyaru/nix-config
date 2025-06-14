@@ -21,65 +21,112 @@
     ags.url = "github:aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-stable,
-    darwin,
-    home-manager,
-    impermanence,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    systems = ["x86_64-linux" "aarch64-darwin"];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-  in {
-    packages =
-      forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.pre-commit-hooks.flakeModule
+      ];
 
-    formatter =
-      forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+      systems = ["x86_64-linux" "aarch64-darwin"];
 
-    overlays = import ./overlays {inherit inputs;};
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
+        packages = import ./pkgs pkgs;
 
-    nixosModules = import ./modules/nixos;
+        formatter = pkgs.alejandra;
 
-    # host configs
-    nixosConfigurations = {
-      radiata = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/radiata/configuration.nix
-          inputs.lanzaboote.nixosModules.lanzaboote
-          inputs.nix-index-database.nixosModules.nix-index
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.lis = import ./home/lis.nix;
-          }
-        ];
+        pre-commit = {
+          check.enable = true;
+          settings = {
+            hooks = {
+              alejandra.enable = true;
+              deadnix = {
+                enable = true;
+                excludes = ["home/applications/firefox/addons.nix"];
+              };
+              statix.enable = true;
+              nil.enable = true;
+            };
+          };
+        };
+
+        devShells.default = let
+          check-impermanence = pkgs.writeShellScriptBin "check-impermanence" (builtins.readFile "${inputs.self}/scripts/check-impermanence.sh");
+        in
+          pkgs.mkShell {
+            packages = with pkgs; [
+              alejandra
+              deadnix
+              statix
+              nil
+              git
+              fd
+              check-impermanence
+            ];
+
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+              echo "lis' nix-config environment"
+            '';
+          };
+      };
+
+      flake = {
+        overlays = import ./overlays {inherit inputs;};
+        nixosModules = import ./modules/nixos;
+
+        nixosConfigurations = {
+          radiata = inputs.nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+              outputs = inputs.self;
+            };
+            modules = [
+              ./hosts/radiata/configuration.nix
+              inputs.lanzaboote.nixosModules.lanzaboote
+              inputs.nix-index-database.nixosModules.nix-index
+              inputs.home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  backupFileExtension = "backup";
+                  extraSpecialArgs = {inherit inputs;};
+                  users.lis = import ./home/lis.nix;
+                };
+              }
+            ];
+          };
+        };
+
+        darwinConfigurations = {
+          carrot = inputs.darwin.lib.darwinSystem {
+            specialArgs = {
+              inherit inputs;
+              outputs = inputs.self;
+            };
+            modules = [
+              ./hosts/carrot/configuration.nix
+              inputs.home-manager.darwinModules.home-manager
+              {
+                nixpkgs.overlays = [inputs.nixpkgs-firefox-darwin.overlay];
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {inherit inputs;};
+                  users.bun = import ./home/bun.nix;
+                };
+              }
+            ];
+          };
+        };
       };
     };
-    darwinConfigurations = {
-      carrot = darwin.lib.darwinSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/carrot/configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            nixpkgs.overlays = [inputs.nixpkgs-firefox-darwin.overlay];
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.bun = import ./home/bun.nix;
-          }
-        ];
-      };
-    };
-  };
 }

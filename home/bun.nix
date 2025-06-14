@@ -17,35 +17,33 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    raycast
-    nnn
-    comma
-
-    zip
-    xz
-    unzip
-    p7zip
-
-    ripgrep
-    jq
-    yq-go
-    fzf
+    alejandra
     aria2
-    socat
-    nmap
+    comma
     cowsay
     file
-    which
-    tree
-    gnused
-    nil
-    gnutar
+    fzf
     gawk
-    zstd
-    gnupg
     glow
-    alejandra
+    gnupg
+    gnused
+    gnutar
+    jq
+    nil
+    nmap
+    nnn
     nom
+    p7zip
+    raycast
+    ripgrep
+    socat
+    tree
+    unzip
+    which
+    xz
+    yq-go
+    zip
+    zstd
   ];
 
   programs = {

@@ -32,9 +32,9 @@ in {
     enable = true;
     theme.name = "adw-gtk3";
     theme.package = pkgs.adw-gtk3;
-    cursorTheme.package = cursorTheme.package;
-    cursorTheme.name = cursorTheme.name;
-    cursorTheme.size = cursorTheme.size;
+    cursorTheme = {
+      inherit (cursorTheme) package name size;
+    };
   };
 
   xdg = {
@@ -82,6 +82,8 @@ in {
 
     packages = with pkgs; [
       btop
+      claude-code
+      code-cursor
       eza
       flatpak
       ghostty
@@ -96,6 +98,8 @@ in {
       runelite
       slurp
       socat
+      spotify
+      strace
       swaybg
       tealdeer
       telegram-desktop
@@ -105,8 +109,6 @@ in {
       wlogout
       xclip
       xdg-utils
-      code-cursor
-      strace
     ];
 
     sessionPath = [];
@@ -115,10 +117,6 @@ in {
       RUSTUP_HOME = "${config.home.homeDirectory}/.local/share/rustup";
       XCURSOR_SIZE = cursorTheme.size;
       XCURSOR_THEME = cursorTheme.name;
-      NIXOS_OZONE_WL = "1";
-      QT_QPA_PLATFORM = "wayland";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-      SDL_VIDEODRIVER = "wayland";
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
@@ -126,39 +124,42 @@ in {
     };
   };
 
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = false;
+  programs = {
+    home-manager.enable = true;
+    git.enable = true;
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+      };
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    fzf.enable = true;
+    zsh = {
+      enable = true;
+      initExtra = "";
+      plugins = [
+        {
+          name = "zsh-autosuggestions";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-autosuggestions";
+            rev = "v0.7.0";
+            sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
+          };
+        }
+      ];
+      envExtra = ''
+        if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+          dbus-run-session Hyprland
+        fi
+      '';
     };
   };
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-  programs.fzf.enable = true;
-  programs.zsh = {
-    enable = true;
-    initExtra = "";
-    plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "v0.7.0";
-          sha256 = "KLUYpUu4DHRumQZ3w59m9aTW6TBKMCXl2UcKi4uMd7w=";
-        };
-      }
-    ];
-    #    envExtra = ''
-    #      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    #        dbus-run-session Hyprland
-    #      fi
-    #    '';
-  };
+
   systemd.user.startServices = "sd-switch";
 
   home.stateVersion = "23.11";

@@ -4,14 +4,9 @@
 
 # lis' nix config
 
-```nixos-rebuild switch --flake .#radiata --recreate-lock-file --show-trace --log-format internal-json -v |& nom --json```
+```nixos-rebuild switch --flake .#radiata --show-trace --log-format internal-json -v |& nom --json```
 
-```darwin-rebuild switch --flake .#carrot --recreate-lock-file --show-trace --log-format internal-json -v |& nom --json```
+```darwin-rebuild switch --flake .#carrot --show-trace --log-format internal-json -v |& nom --json```
 
-
-#### quirks to fix
-* ##### do we really need brew? (not yet lol)
-* ##### [/home/user can't be deleted and then recreated?](https://github.com/gyaru/nix-config/blob/baea74da6c8c5453bd57bf8eceeb4cc6a4b68e96/hosts/radiata/configuration.nix#L122)
-
-
+# check filesystem diff
 sudo fd --one-file-system --base-directory / --type f --hidden --exclude "{tmp,etc/passwd}"

@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.vscode = {
     enable = true;
     profiles.default = {
@@ -15,27 +10,27 @@
         jnoortheen.nix-ide
       ];
       userSettings = {
-      "editor.fontSize" = 16;
-      "editor.fontLigatures" = true;
-      "editor.formatOnSave" = true;
-      "editor.fontFamily" = "'M PLUS 1 Code', 'Maple Mono NF', 'Noto Color Emoji', 'monospace', monospace";
-      "workbench.colorTheme" = "Rosé Pine Dawn";
-      "workbench.iconTheme" = "material-icon-theme";
-      "workbench.startupEditor" = "none";
-      "workbench.productIconTheme" = "material-product-icons";
-      "git.confirmSync" = false;
-      "git.autofetch" = true;
-      "window.titleBarStyle" = "custom";
-      "[nix]" = {"editor.defaultFormatter" = "jnoortheen.nix-ide";};
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nil";
-      "nix.serverSettings" = {
-        "nil" = {
-          "formatting" = {
-            "command" = ["alejandra"];
+        "editor.fontSize" = 16;
+        "editor.fontLigatures" = true;
+        "editor.formatOnSave" = true;
+        "editor.fontFamily" = "'M PLUS 1 Code', 'Maple Mono NF', 'Noto Color Emoji', 'monospace', monospace";
+        "workbench.colorTheme" = "Rosé Pine Dawn";
+        "workbench.iconTheme" = "material-icon-theme";
+        "workbench.startupEditor" = "none";
+        "workbench.productIconTheme" = "material-product-icons";
+        "git.confirmSync" = false;
+        "git.autofetch" = true;
+        "window.titleBarStyle" = "custom";
+        "[nix]" = {"editor.defaultFormatter" = "jnoortheen.nix-ide";};
+        "nix.enableLanguageServer" = true;
+        "nix.serverPath" = "nil";
+        "nix.serverSettings" = {
+          "nil" = {
+            "formatting" = {
+              "command" = ["alejandra"];
+            };
           };
         };
-      };
       };
     };
   };
