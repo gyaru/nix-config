@@ -59,20 +59,22 @@
         };
 
         devShells.default = let
-          gyaru = pkgs.writeShellScriptBin "gyaru" (builtins.readFile "${inputs.self}/scripts/gyaru.sh");
+          scripts = ["pani"];
+          mkScript = name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name}.sh);
         in
           pkgs.mkShell {
-            packages = with pkgs; [
-              alejandra
-              deadnix
-              fd
-              git
-              gyaru
-              nil
-              nix-output-monitor
-              shellcheck
-              statix
-            ];
+            packages = with pkgs;
+              [
+                alejandra
+                deadnix
+                fd
+                git
+                nil
+                nix-output-monitor
+                shellcheck
+                statix
+              ]
+              ++ map mkScript scripts;
 
             shellHook = ''
               ${config.pre-commit.installationScript}

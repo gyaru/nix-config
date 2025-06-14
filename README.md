@@ -13,14 +13,14 @@ modular nixos & home-manager configuration with impermanence
 ## quick start
 ```bash
 nix develop
-gyaru switch  # rebuild current host
+pani switch  # rebuild current host
 ```
 
-## gyaru commands
-- `gyaru switch` - rebuild & switch
-- `gyaru test` - test config without bootloader
-- `gyaru check` - validate flake
-- `gyaru impermanence` - check what dies on reboot
+## pani commands
+- `pani switch` - rebuild & switch
+- `pani test` - test config without bootloader
+- `pani check` - validate flake
+- `pani impermanence` - check what dies on reboot
 
 ## structure
 ```
@@ -29,7 +29,7 @@ gyaru switch  # rebuild current host
 ├── home/            # user configs
 ├── modules/         # reusable nixos modules
 ├── pkgs/            # custom packages
-└── scripts/         # helpers (gyaru)
+└── scripts/         # helpers (pani)
 ```
 
 ## modules

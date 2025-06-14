@@ -27,7 +27,7 @@ in
               decentraleyes
               enhancer-for-youtube
               languagetool
-              octotree
+              onepassword-password-manager
               privacy-badger
               refined-github
               sponsorblock
@@ -43,6 +43,7 @@ in
             "browser.toolbars.bookmarks.visibility" = "never";
             "browser.urlbar.suggest.quicksuggest.sponsored" = false;
             "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
+            "extensions.autoDisableScopes" = 0;
 
             # privacy & telemetry ahoy
             "privacy.trackingprotection.enabled" = true;
@@ -51,7 +52,6 @@ in
             "privacy.partition.always_partition_third_party_non_cookie_storage" = true;
             "privacy.firstparty.isolate" = false;
             "network.cookie.cookieBehavior" = 5;
-            "browser.contentblocking.category" = "strict";
             "datareporting.policy.dataSubmissionEnabled" = false;
             "datareporting.healthreport.uploadEnabled" = false;
             "toolkit.telemetry.unified" = false;
@@ -109,9 +109,9 @@ in
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "browser.theme.dark-private-windows" = false;
             "extensions.activeThemeID" = "default-theme@mozilla.org";
-            # "browser.uiCustomization.state" = ''
-            #   {"placements":{"widget-overflow-fixed-list":["fxa-toolbar-menu-button","sidebar-button"],"unified-extensions-area":["sponsorblocker_ajay_app-browser-action","moz-addon_7tv_app-browser-action","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","downloads-button","unified-extensions-button","reset-pbm-toolbar-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","profiler-button","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action","moz-addon_7tv_app-browser-action","sponsorblocker_ajay_app-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":20,"newElementCount":5}
-            # '';
+            "browser.uiCustomization.state" = ''
+              {"placements":{"widget-overflow-fixed-list":["fxa-toolbar-menu-button"],"unified-extensions-area":["jid1-mnnxcxisbpnsxq_jetpack-browser-action","sponsorblocker_ajay_app-browser-action","moz-addon_7tv_app-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action","_74145f27-f039-47ce-a470-a662b129930a_-browser-action","jid1-bofifl9vbdl2zq_jetpack-browser-action","jid1-om7ejgwa1u8akg_jetpack-browser-action","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","vertical-spacer","stop-reload-button","urlbar-container","save-to-pocket-button","reset-pbm-toolbar-button","ublock0_raymondhill_net-browser-action","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":[],"vertical-tabs":["tabbrowser-tabs"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","profiler-button","enhancerforyoutube_maximerf_addons_mozilla_org-browser-action","languagetool-webextension_languagetool_org-browser-action","moz-addon_7tv_app-browser-action","sponsorblocker_ajay_app-browser-action","_74145f27-f039-47ce-a470-a662b129930a_-browser-action","jid1-bofifl9vbdl2zq_jetpack-browser-action","jid1-om7ejgwa1u8akg_jetpack-browser-action","jid1-mnnxcxisbpnsxq_jetpack-browser-action","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list","vertical-tabs"],"currentVersion":22,"newElementCount":7}
+            '';
           };
         };
       };

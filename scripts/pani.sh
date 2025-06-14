@@ -47,7 +47,6 @@ check_impermanence() {
     local limit=""
     local show_persisted=false
     
-    # Check if any arguments were passed
     if [[ $# -gt 0 ]]; then
         if [[ "$1" == "--show-persisted" ]]; then
             show_persisted=true
@@ -55,7 +54,7 @@ check_impermanence() {
             limit=$2
         fi
     fi
-    
+
     echo "checking for files that would be lost on reboot..."
     echo "reading persistence configuration from active mounts..."
     
@@ -154,13 +153,13 @@ check_impermanence() {
     fi
 }
 
-gyaru() {
+pani() {
     local cmd="${1:-}"
     local host="${2:-$(get_current_host)}"
     
     if [[ -z "$cmd" ]]; then
         print_error "No command specified"
-        echo "Usage: gyaru <command> [host]"
+        echo "Usage: pani <command> [host]"
         echo ""
         echo "Commands:"
         echo "  switch        - Build and switch to new configuration"
@@ -217,8 +216,8 @@ gyaru() {
     return $exit_code
 }
 
-export -f gyaru
+export -f pani
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    gyaru "$@"
+    pani "$@"
 fi
