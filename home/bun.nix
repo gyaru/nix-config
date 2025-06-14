@@ -30,9 +30,9 @@
     gnutar
     jq
     nil
+    nix-output-monitor
     nmap
     nnn
-    nom
     p7zip
     raycast
     ripgrep
@@ -47,13 +47,11 @@
   ];
 
   programs = {
-    # modern vim
     neovim = {
       enable = true;
       defaultEditor = true;
       vimAlias = true;
     };
-
     eza = {
       enable = true;
       git = true;

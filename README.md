@@ -4,9 +4,39 @@
 
 # lis' nix config
 
-```nixos-rebuild switch --flake .#radiata --show-trace --log-format internal-json -v |& nom --json```
+modular nixos & home-manager configuration with impermanence
 
-```darwin-rebuild switch --flake .#carrot --show-trace --log-format internal-json -v |& nom --json```
+## hosts
+- **radiata** - desktop (hyprland, amd)
+- **carrot** - macbook (nix-darwin)
 
-# dev shell with useful utilities
-```nix develop```
+## quick start
+```bash
+nix develop
+gyaru switch  # rebuild current host
+```
+
+## gyaru commands
+- `gyaru switch` - rebuild & switch
+- `gyaru test` - test config without bootloader
+- `gyaru check` - validate flake
+- `gyaru impermanence` - check what dies on reboot
+
+## structure
+```
+├── flake.nix        # entrypoint
+├── hosts/           # machine-specific
+├── home/            # user configs
+├── modules/         # reusable nixos modules
+├── pkgs/            # custom packages
+└── scripts/         # helpers (gyaru)
+```
+
+## modules
+- **audio** - pipewire w/ device config
+- **wayland** - compositor agnostic portal setup
+- **impermanence** - btrfs rollback on boot
+- **desktop** - kernel tweaks & base desktop stuff
+- **gaming** - steam, gamemode, etc
+
+modular by design - enable what you need per host

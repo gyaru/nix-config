@@ -59,21 +59,24 @@
         };
 
         devShells.default = let
-          check-impermanence = pkgs.writeShellScriptBin "check-impermanence" (builtins.readFile "${inputs.self}/scripts/check-impermanence.sh");
+          gyaru = pkgs.writeShellScriptBin "gyaru" (builtins.readFile "${inputs.self}/scripts/gyaru.sh");
         in
           pkgs.mkShell {
             packages = with pkgs; [
               alejandra
               deadnix
-              statix
-              nil
-              git
               fd
-              check-impermanence
+              git
+              gyaru
+              nil
+              nix-output-monitor
+              shellcheck
+              statix
             ];
 
             shellHook = ''
               ${config.pre-commit.installationScript}
+              export FLAKE_DIR="${inputs.self}"
               echo "lis' nix-config environment"
             '';
           };

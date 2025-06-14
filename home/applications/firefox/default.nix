@@ -23,7 +23,6 @@ in
           extensions.packages = with firefoxAddons;
             [
               augmented-steam
-              bitwarden
               clearurls
               decentraleyes
               enhancer-for-youtube
