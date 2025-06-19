@@ -6,6 +6,8 @@
 
 modular nixos & home-manager configuration with impermanence
 
+**personal use**
+
 ## hosts
 - **radiata** - desktop (hyprland, amd)
 - **carrot** - macbook (nix-darwin)
@@ -38,5 +40,3 @@ pani switch  # rebuild current host
 - **impermanence** - btrfs rollback on boot
 - **desktop** - kernel tweaks & base desktop stuff
 - **gaming** - steam, gamemode, etc
-
-modular by design - enable what you need per host

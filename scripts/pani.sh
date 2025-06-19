@@ -183,12 +183,6 @@ pani() {
         switch|boot|test|build|dry-build)
             if sudo nixos-rebuild "$cmd" --flake "${FLAKE_DIR}#$host" --log-format internal-json |& nom --json; then
                 print_success "Operation completed successfully!"
-                
-                # If we're in a devshell and just did a switch, reload it
-                if [[ "$cmd" == "switch" ]] && [[ -n "${IN_NIX_SHELL:-}" ]]; then
-                    print_info "Reloading development shell..."
-                    exec nix develop "${FLAKE_DIR}#" -c "$SHELL"
-                fi
             else
                 exit_code=$?
                 print_error "Operation failed!"

@@ -7,8 +7,8 @@
   home.packages = with pkgs; [jaq xorg.xprop];
   wayland.windowManager.hyprland.settings = {
     monitor = [
-      "DP-1, 3440x1440@160, 0x0, 1, bitdepth, 8"
-      "HDMI-A-1, 2560x1440@60, 3440x0, 1, transform, 1, bitdepth, 8"
+      "DP-1, 3440x1440@160, 0x512, 1, bitdepth, 8" # muh pixel perfect
+      "HDMI-A-1, 2560x1440@60, 3440x0, 1, transform, 3, bitdepth, 8"
     ];
     exec-once = [
       "swaybg -o DP-1 -i ~/.local/share/wallpapers/bg1.jpg -m fill"

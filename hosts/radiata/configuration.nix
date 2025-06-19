@@ -140,6 +140,12 @@
       fsType = "vfat";
       neededForBoot = true;
     };
+    # shigure
+    "/mnt/shigure" = {
+      device = "/dev/disk/by-uuid/CC76855576854166";
+      fsType = "ntfs";
+      options = ["rw" "uid=1000" "gid=100" "umask=022"];
+    };
   };
 
   boot = {
@@ -189,10 +195,16 @@
     pathsToLink = ["/share/zsh"];
     shells = with pkgs; [zsh];
     systemPackages = with pkgs; [
-      edk2-uefi-shell
+      qemu
+      (qemu.override {
+        gtkSupport = true;
+        openGLSupport = true;
+        virglSupport = true;
+      })
       git
       ntfs3g
       sbctl
+      qemu_kvm
     ];
   };
 
@@ -264,6 +276,9 @@
   # services
   services = {
     journald.extraConfig = lib.mkForce "";
+    udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="636d", MODE="0660", GROUP="usbpassthrough", TAG+="uaccess"
+    '';
   };
 
   # users
@@ -274,7 +289,7 @@
       isNormalUser = true;
       shell = pkgs.zsh;
       group = "users";
-      extraGroups = ["wheel" "video" "audio" "realtime" "input"];
+      extraGroups = ["wheel" "video" "audio" "realtime" "input" "kvm" "usbpassthrough"];
       hashedPasswordFile = "/persist/passwords/lis";
     };
   };

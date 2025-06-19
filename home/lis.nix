@@ -83,7 +83,6 @@ in {
     packages = with pkgs; [
       btop
       claude-code
-      code-cursor
       eza
       flatpak
       ghostty
